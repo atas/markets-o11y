@@ -1,0 +1,4 @@
+yfinance>=0.2.40
+psycopg2-binary>=2.9
+pyyaml>=6.0
+schedule>=1.2

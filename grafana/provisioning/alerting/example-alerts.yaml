@@ -1,0 +1,70 @@
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: markets-o11y-examples
+    folder: markets-o11y
+    interval: 5m
+    rules:
+      - uid: price-threshold-example
+        title: "Price Threshold (Example - Disabled)"
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: TimescaleDB
+            model:
+              rawSql: |
+                SELECT time, close as value
+                FROM prices
+                WHERE symbol = 'GC=F'
+                  AND $__timeFilter(time)
+                ORDER BY time DESC
+                LIMIT 1
+              format: time_series
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: A
+              conditions:
+                - evaluator:
+                    type: gt
+                    params: [3000]
+        noDataState: OK
+        execErrState: OK
+        isPaused: true
+        annotations:
+          summary: "Gold price crossed $3000"
+
+      - uid: no-data-example
+        title: "No Data Alert (Example - Disabled)"
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 3600
+              to: 0
+            datasourceUid: TimescaleDB
+            model:
+              rawSql: |
+                SELECT COUNT(*) as value, NOW() as time
+                FROM prices
+                WHERE time > NOW() - INTERVAL '1 hour'
+              format: time_series
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: A
+              conditions:
+                - evaluator:
+                    type: lt
+                    params: [1]
+        noDataState: Alerting
+        execErrState: OK
+        isPaused: true
+        annotations:
+          summary: "No price data received in the last hour"

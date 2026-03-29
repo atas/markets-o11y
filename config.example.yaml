@@ -1,0 +1,43 @@
+# markets-o11y configuration
+# Copy this file to config.yaml and customize as needed.
+
+defaults:
+  fetch_interval: 15m   # how often to poll for new prices
+  history_years: 10     # how many years of history to backfill on first run
+
+symbols:
+  stocks:
+    - symbol: AAPL
+    - symbol: MSFT
+    - symbol: GOOGL
+    - symbol: AMZN
+    - symbol: TSLA
+    - symbol: NVDA
+    - symbol: AMD
+    - symbol: INTC
+    - symbol: ORCL
+    - symbol: BA
+    - symbol: ETSY
+
+  etfs:
+    - symbol: VOO       # Vanguard S&P 500 ETF
+    - symbol: VTSAX     # Vanguard Total Stock Market
+    - symbol: VWRD.L    # Vanguard FTSE All-World (London)
+
+  commodities:
+    - symbol: GC=F      # Gold futures
+    - symbol: SI=F      # Silver futures
+    - symbol: CL=F      # Crude oil (WTI)
+
+  forex:
+    - symbol: EURUSD=X
+    - symbol: GBPUSD=X
+    - symbol: EURTRY=X  # EUR/TRY
+
+  crypto:
+    - symbol: BTC-USD
+    - symbol: ETH-USD
+
+  indices:
+    - symbol: ^GSPC     # S&P 500
+    - symbol: ^DJI      # Dow Jones Industrial Average

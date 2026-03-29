@@ -1,0 +1,59 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-markets}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-markets}
+      POSTGRES_DB: ${POSTGRES_DB:-markets}
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-markets}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  yfinance:
+    build: ./yfinance
+    environment:
+      DB_HOST: timescaledb
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER:-markets}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-markets}
+      DB_NAME: ${POSTGRES_DB:-markets}
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:-admin}
+      GF_DATE_FORMATS_FULL_DATE: "DD/MM/YYYY HH:mm:ss"
+      GF_DATE_FORMATS_INTERVAL_DAY: DD/MM
+      GF_DATE_FORMATS_INTERVAL_MONTH: MM/YYYY
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/markets.json
+      POSTGRES_USER: ${POSTGRES_USER:-markets}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-markets}
+      POSTGRES_DB: ${POSTGRES_DB:-markets}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  timescaledb_data:
+  grafana_data:

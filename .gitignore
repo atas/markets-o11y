@@ -1,0 +1,31 @@
+# User config (contains custom symbols)
+config.yaml
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Grafana data
+grafana/data/
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Future: Node.js (Hypercore P2P sidecar)
+node_modules/
