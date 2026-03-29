@@ -18,6 +18,11 @@ symbols:
     - symbol: ORCL
     - symbol: BA
     - symbol: ETSY
+    - symbol: AVGO      # Broadcom
+    - symbol: TSM       # TSMC
+    - symbol: ASML      # ASML (Dutch lithography)
+    - symbol: LMT       # Lockheed Martin
+    - symbol: SNOW      # Snowflake
 
   etfs:
     - symbol: VOO       # Vanguard S&P 500 ETF
