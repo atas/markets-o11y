@@ -22,6 +22,7 @@ resources:
   - configmaps/worker-config.yaml
   - configmaps/grafana-provisioning.yaml
   - configmaps/grafana-dashboards.yaml
+  - configmaps/worker-logs-dashboard.yaml
 
   # Deployments
   - deployments/timescaledb.yaml

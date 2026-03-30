@@ -25,7 +25,7 @@ spec:
             - "until pg_isready -h timescaledb -p 5432; do echo 'waiting for timescaledb...'; sleep 2; done"
       containers:
         - name: worker
-          image: localhost:32000/markets-o11y-worker:latest
+          image: ghcr.io/atas/markets-o11y-worker:latest
           env:
             - name: DB_HOST
               valueFrom:

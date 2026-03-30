@@ -1,13 +1,16 @@
 # markets-o11y Kubernetes Deployment Makefile
 
-.PHONY: help apply-prod apply-secrets-prod diff-prod delete-prod watch-prod status-prod build-worker deploy-worker-prod logs-worker
+.PHONY: help apply-prod apply-secrets-prod diff-prod delete-prod watch-prod status-prod deploy-worker-prod logs-worker
 
 .DEFAULT_GOAL := help
+
+IMAGE := ghcr.io/atas/markets-o11y-worker
+TAG   ?= sha-e24fa15
 
 help: ## Show this help message
 	@echo "markets-o11y Kubernetes Deployment"
 	@echo ""
-	@echo "Usage: make [target]"
+	@echo "Usage: make [target] [TAG=sha-abc1234]"
 	@echo ""
 	@echo "Targets:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-25s\033[0m %s\n", $$1, $$2}'
@@ -46,12 +49,10 @@ status-prod: ## Show status of all production resources
 	@echo "\n=== PVCs ==="
 	kubectl get pvc -n markets-o11y-prod
 
-build-worker: ## Build worker image and load into microk8s
-	docker build -t localhost:32000/markets-o11y-worker:latest ../worker
-	docker push localhost:32000/markets-o11y-worker:latest
-
-deploy-worker-prod: build-worker ## Build, push, and restart worker
-	kubectl rollout restart deployment/worker -n markets-o11y-prod
+deploy-worker-prod: ## Update worker image tag and restart (usage: make deploy-worker-prod TAG=sha-abc1234)
+	@cd kustomize/overlays/prod && \
+		kustomize edit set image $(IMAGE):$(TAG)
+	kubectl apply -k kustomize/overlays/prod
 	kubectl rollout status deployment/worker -n markets-o11y-prod
 
 logs-worker: ## Tail worker logs

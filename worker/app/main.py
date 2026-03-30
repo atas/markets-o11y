@@ -9,10 +9,20 @@ from config import AppConfig, load_config
 from db import get_connection, insert_prices
 from yf.fetcher import fetch_current
 
+class _YFinanceDelistFilter(logging.Filter):
+    """Downgrade yfinance 'possibly delisted' errors to warnings."""
+    def filter(self, record):
+        if record.levelno == logging.ERROR and "possibly delisted; no price data found" in record.getMessage():
+            record.levelno = logging.WARNING
+            record.levelname = "WARNING"
+        return True
+
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
+logging.getLogger("yfinance").addFilter(_YFinanceDelistFilter())
 logger = logging.getLogger(__name__)
 
 

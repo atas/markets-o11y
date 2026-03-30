@@ -16,6 +16,5 @@ labels:
 
 # Image customization
 images:
-  - name: localhost:32000/markets-o11y-worker
-    newName: localhost:32000/markets-o11y-worker
-    newTag: latest
+  - name: ghcr.io/atas/markets-o11y-worker
+    newTag: sha-e24fa15

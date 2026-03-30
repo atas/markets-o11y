@@ -78,7 +78,7 @@ This project is an open-source tool for **personal, non-commercial use only**.
 
 **Regarding data sources:**
 - Raw financial price data (stock prices, commodity prices, exchange rates) is factual information and is not subject to copyright under US law (*Feist Publications v. Rural Telephone*, 1991) or EU law.
-- However, accessing data via Yahoo Finance or any third-party provider requires agreeing to their respective Terms of Service. **Each user is solely responsible for ensuring their usage complies with the ToS of their chosen data source.**
+- However, accessing data via Yahoo Finance or any third-party provider requires agreeing to their respective Terms of Service. You should refer to Yahoo!'s terms of use ([here](https://policies.yahoo.com/us/en/yahoo/terms/product-atos/apiforydn/index.htm), [here](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html), and [here](https://policies.yahoo.com/us/en/yahoo/terms/index.htm)) for details on your rights to use the actual data downloaded. **Each user is solely responsible for ensuring their usage complies with the ToS of their chosen data source.**
 - This project does not endorse, encourage, or facilitate any violation of third-party Terms of Service.
 
 **General:**
