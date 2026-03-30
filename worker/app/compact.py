@@ -90,7 +90,7 @@ def try_compact(config: AppConfig):
                 logger.debug("Daily bar not yet available for %s", symbol)
                 continue
 
-            inserted = insert_prices(conn, [daily_bar])
+            insert_prices(conn, [daily_bar])
             deleted = delete_intraday(conn, symbol, today)
             logger.info(
                 "Compacted %s: deleted %d intraday rows, inserted daily bar",
