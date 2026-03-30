@@ -41,7 +41,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "dark-red",
+            "fixedColor": "semi-dark-green",
             "mode": "fixed"
           },
           "custom": {
@@ -87,12 +87,12 @@
                 "value": 0
               },
               {
-                "color": "red",
-                "value": 480
+                "color": "semi-dark-blue",
+                "value": 550
               },
               {
                 "color": "dark-red",
-                "value": 620
+                "value": 590
               }
             ]
           },
@@ -137,7 +137,7 @@
           "refId": "A"
         }
       ],
-      "title": "S&P 500 VOO",
+      "title": "S&P 500 VOO 5\ufe0f\u20e30\ufe0f\u20e30\ufe0f\u20e3",
       "type": "timeseries"
     },
     {
@@ -194,8 +194,8 @@
                 "value": 0
               },
               {
-                "color": "blue",
-                "value": 38000
+                "color": "semi-dark-blue",
+                "value": 42000
               },
               {
                 "color": "dark-red",
@@ -244,7 +244,7 @@
           "refId": "A"
         }
       ],
-      "title": "Dow Jones (^DJI)",
+      "title": "Dow Jones (^DJI) \ud83c\udfdb\ufe0f",
       "type": "timeseries"
     },
     {
@@ -255,7 +255,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "dark-red",
+            "fixedColor": "semi-dark-purple",
             "mode": "fixed"
           },
           "custom": {
@@ -301,12 +301,12 @@
                 "value": 0
               },
               {
-                "color": "red",
-                "value": 120
+                "color": "semi-dark-purple",
+                "value": 140
               },
               {
                 "color": "dark-red",
-                "value": 165
+                "value": 160
               }
             ]
           },
@@ -351,7 +351,7 @@
           "refId": "A"
         }
       ],
-      "title": "Vanguard FTSE All-World / VWRD.L",
+      "title": "Vanguard FTSE All-World / VWRD.L \ud83c\udf0d",
       "type": "timeseries"
     },
     {
@@ -362,7 +362,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "dark-red",
+            "fixedColor": "dark-blue",
             "mode": "fixed"
           },
           "custom": {
@@ -408,12 +408,12 @@
                 "value": 0
               },
               {
-                "color": "red",
-                "value": 120
+                "color": "dark-blue",
+                "value": 140
               },
               {
                 "color": "dark-red",
-                "value": 160
+                "value": 155
               }
             ]
           },
@@ -458,7 +458,7 @@
           "refId": "A"
         }
       ],
-      "title": "Vanguard US Total / VTSAX",
+      "title": "Vanguard US Total / VTSAX \ud83c\uddfa\ud83c\uddf8",
       "type": "timeseries"
     },
     {
@@ -528,8 +528,12 @@
                 "value": 0
               },
               {
-                "color": "yellow",
+                "color": "light-blue",
                 "value": 2500
+              },
+              {
+                "color": "yellow",
+                "value": 4000
               },
               {
                 "color": "dark-red",
@@ -589,7 +593,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "light-blue",
+            "fixedColor": "#C0C0C0",
             "mode": "fixed"
           },
           "custom": {
@@ -635,12 +639,12 @@
                 "value": 0
               },
               {
-                "color": "light-blue",
-                "value": 30
+                "color": "#C0C0C0",
+                "value": 60
               },
               {
                 "color": "dark-red",
-                "value": 100
+                "value": 80
               }
             ]
           },
@@ -685,7 +689,7 @@
           "refId": "A"
         }
       ],
-      "title": "Silver (SI=F)",
+      "title": "Silver (SI=F) \u26aa\ufe0f",
       "type": "timeseries"
     },
     {
@@ -742,12 +746,12 @@
                 "value": 0
               },
               {
-                "color": "purple",
+                "color": "dark-purple",
                 "value": 60
               },
               {
                 "color": "dark-red",
-                "value": 110
+                "value": 90
               }
             ]
           },
@@ -792,7 +796,7 @@
           "refId": "A"
         }
       ],
-      "title": "Crude Oil (CL=F)",
+      "title": "Crude Oil (CL=F) \ud83d\udee2\ufe0f",
       "type": "timeseries"
     },
     {
@@ -849,8 +853,8 @@
                 "value": 0
               },
               {
-                "color": "orange",
-                "value": 50000
+                "color": "semi-dark-orange",
+                "value": 70000
               },
               {
                 "color": "dark-red",
@@ -899,7 +903,7 @@
           "refId": "A"
         }
       ],
-      "title": "Bitcoin (BTC-USD)",
+      "title": "Bitcoin (BTC-USD) \u20bf",
       "type": "timeseries"
     },
     {
@@ -956,12 +960,12 @@
                 "value": 0
               },
               {
-                "color": "purple",
-                "value": 2500
+                "color": "dark-purple",
+                "value": 1800
               },
               {
                 "color": "dark-red",
-                "value": 4500
+                "value": 4000
               }
             ]
           },
@@ -1006,7 +1010,7 @@
           "refId": "A"
         }
       ],
-      "title": "Ethereum (ETH-USD)",
+      "title": "Ethereum (ETH-USD) \u27e0",
       "type": "timeseries"
     },
     {
@@ -1076,12 +1080,12 @@
                 "value": 0
               },
               {
-                "color": "light-green",
-                "value": 120
+                "color": "semi-dark-green",
+                "value": 110
               },
               {
                 "color": "dark-red",
-                "value": 195
+                "value": 180
               }
             ]
           },
@@ -1126,7 +1130,7 @@
           "refId": "A"
         }
       ],
-      "title": "NVDA",
+      "title": "NVDA ❇️",
       "type": "timeseries"
     },
     {
@@ -1137,7 +1141,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "dark-red",
+            "fixedColor": "semi-dark-orange",
             "mode": "fixed"
           },
           "custom": {
@@ -1183,12 +1187,12 @@
                 "value": 0
               },
               {
-                "color": "red",
-                "value": 150
+                "color": "semi-dark-orange",
+                "value": 100
               },
               {
                 "color": "dark-red",
-                "value": 250
+                "value": 220
               }
             ]
           },
@@ -1291,11 +1295,11 @@
               },
               {
                 "color": "blue",
-                "value": 35
+                "value": 25
               },
               {
                 "color": "dark-red",
-                "value": 55
+                "value": 45
               }
             ]
           },
@@ -1397,12 +1401,12 @@
                 "value": 0
               },
               {
-                "color": "blue",
-                "value": 200
+                "color": "semi-dark-blue",
+                "value": 100
               },
               {
                 "color": "dark-red",
-                "value": 380
+                "value": 190
               }
             ]
           },
@@ -1458,7 +1462,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "semi-dark-red",
+            "fixedColor": "dark-purple",
             "mode": "fixed"
           },
           "custom": {
@@ -1504,12 +1508,12 @@
                 "value": 0
               },
               {
-                "color": "red",
-                "value": 200
+                "color": "dark-purple",
+                "value": 100
               },
               {
                 "color": "dark-red",
-                "value": 360
+                "value": 190
               }
             ]
           },
@@ -1611,12 +1615,12 @@
                 "value": 0
               },
               {
-                "color": "orange",
+                "color": "semi-dark-orange",
                 "value": 700
               },
               {
                 "color": "dark-red",
-                "value": 1400
+                "value": 1300
               }
             ]
           },
@@ -1731,12 +1735,12 @@
                 "value": 0
               },
               {
-                "color": "blue",
-                "value": 200
+                "color": "super-light-blue",
+                "value": 190
               },
               {
                 "color": "dark-red",
-                "value": 270
+                "value": 260
               }
             ]
           },
@@ -1800,7 +1804,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "dark-red",
+            "fixedColor": "semi-dark-red",
             "mode": "fixed"
           },
           "custom": {
@@ -1846,12 +1850,12 @@
                 "value": 0
               },
               {
-                "color": "red",
-                "value": 280
+                "color": "semi-dark-red",
+                "value": 250
               },
               {
                 "color": "dark-red",
-                "value": 450
+                "value": 430
               }
             ]
           },
@@ -1907,7 +1911,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "dark-red",
+            "fixedColor": "dark-green",
             "mode": "fixed"
           },
           "custom": {
@@ -1953,12 +1957,12 @@
                 "value": 0
               },
               {
-                "color": "red",
-                "value": 120
+                "color": "dark-green",
+                "value": 140
               },
               {
                 "color": "dark-red",
-                "value": 300
+                "value": 280
               }
             ]
           },
@@ -2060,12 +2064,12 @@
                 "value": 0
               },
               {
-                "color": "super-light-green",
-                "value": 160
+                "color": "semi-dark-green",
+                "value": 170
               },
               {
                 "color": "dark-red",
-                "value": 320
+                "value": 300
               }
             ]
           },
@@ -2167,8 +2171,8 @@
                 "value": 0
               },
               {
-                "color": "orange",
-                "value": 170
+                "color": "semi-dark-orange",
+                "value": 180
               },
               {
                 "color": "dark-red",
@@ -2277,12 +2281,12 @@
                 "value": 0
               },
               {
-                "color": "blue",
-                "value": 400
+                "color": "semi-dark-blue",
+                "value": 370
               },
               {
                 "color": "dark-red",
-                "value": 500
+                "value": 430
               }
             ]
           },
@@ -2403,12 +2407,12 @@
                 "value": 0
               },
               {
-                "color": "orange",
-                "value": 50
+                "color": "semi-dark-orange",
+                "value": 45
               },
               {
                 "color": "dark-red",
-                "value": 250
+                "value": 65
               }
             ]
           },
@@ -2515,7 +2519,7 @@
               },
               {
                 "color": "dark-red",
-                "value": 350
+                "value": 250
               }
             ]
           },
@@ -2630,12 +2634,12 @@
                 "value": 0
               },
               {
-                "color": "blue",
-                "value": 180
+                "color": "semi-dark-blue",
+                "value": 150
               },
               {
                 "color": "dark-red",
-                "value": 400
+                "value": 230
               }
             ]
           },
@@ -2737,12 +2741,12 @@
                 "value": 0
               },
               {
-                "color": "blue",
-                "value": 500
+                "color": "dark-blue",
+                "value": 450
               },
               {
                 "color": "dark-red",
-                "value": 650
+                "value": 620
               }
             ]
           },
