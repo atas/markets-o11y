@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: markets-o11y-prod
+
+resources:
+  - ../../base
+
+labels:
+  - pairs:
+      app.kubernetes.io/env: prod
+    includeSelectors: false
+
+# Secrets are managed manually - see k8s/manual/prod/ for templates
+# Run: make apply-secrets-prod (from k8s/ directory)
+
+# Image customization
+images:
+  - name: localhost:32000/markets-o11y-worker
+    newName: localhost:32000/markets-o11y-worker
+    newTag: latest

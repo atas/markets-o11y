@@ -1,6 +1,8 @@
 import logging
 from datetime import datetime, timezone
+from typing import cast
 
+import pandas as pd
 import yfinance as yf
 
 logger = logging.getLogger(__name__)
@@ -25,12 +27,13 @@ def fetch_history(symbol: str, start: str, end: str, category: str) -> list[tupl
         logger.exception("Failed to fetch history for %s", symbol)
         return []
 
-    if df.empty:
+    if df is None or df.empty:
         logger.warning("No historical data returned for %s (%s to %s)", symbol, start, end)
         return []
 
     rows = []
     for ts, row in df.iterrows():
+        ts = cast(pd.Timestamp, ts)
         close = _safe_float(row.get("Close"))
         if close is None:
             continue
@@ -69,7 +72,7 @@ def fetch_current(symbols: list[dict]) -> list[tuple]:
         logger.exception("Failed to fetch current prices")
         return []
 
-    if df.empty:
+    if df is None or df.empty:
         logger.warning("No current data returned")
         return []
 
@@ -79,9 +82,10 @@ def fetch_current(symbols: list[dict]) -> list[tuple]:
     if len(tickers) == 1:
         sym = tickers[0]
         for ts, row in df.iterrows():
+            ts = cast(pd.Timestamp, ts)
             close = _safe_float(row.get("Close"))
             if close is None:
-                continue  # skip rows with no price data (e.g. weekends)
+                continue
             rows.append((
                 ts.to_pydatetime(),
                 sym,
@@ -100,9 +104,10 @@ def fetch_current(symbols: list[dict]) -> list[tuple]:
                 continue
             sym_df = df[sym]
             for ts, row in sym_df.iterrows():
+                ts = cast(pd.Timestamp, ts)
                 close = _safe_float(row.get("Close"))
                 if close is None:
-                    continue  # skip rows with no price data
+                    continue
                 rows.append((
                     ts.to_pydatetime(),
                     sym,

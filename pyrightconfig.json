@@ -1,0 +1,6 @@
+{
+  "pythonVersion": "3.13",
+  "venvPath": "worker",
+  "venv": ".venv",
+  "extraPaths": ["worker/app"]
+}

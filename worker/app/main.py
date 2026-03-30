@@ -38,7 +38,7 @@ def poll(config):
 
 
 def main():
-    logger.info("Starting markets-o11y yfinance fetcher")
+    logger.info("Starting markets-o11y worker")
 
     config = load_config()
     logger.info(

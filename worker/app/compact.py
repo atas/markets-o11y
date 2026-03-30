@@ -2,7 +2,9 @@
 
 import logging
 from datetime import datetime, date, timezone
+from typing import cast
 
+import pandas as pd
 import yfinance as yf
 
 from config import AppConfig
@@ -31,10 +33,11 @@ def _fetch_daily_bar(symbol: str, target_date: date, category: str) -> tuple | N
         logger.exception("Failed to fetch daily bar for %s", symbol)
         return None
 
-    if df.empty:
+    if df is None or df.empty:
         return None
 
     for ts, row in df.iterrows():
+        ts = cast(pd.Timestamp, ts)
         if ts.date() == target_date:
             close = _safe_float(row.get("Close"))
             if close is None:

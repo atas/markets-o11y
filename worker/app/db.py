@@ -1,6 +1,6 @@
 import logging
 import os
-from datetime import datetime
+from datetime import date, datetime
 
 import psycopg2
 from psycopg2.extras import execute_values
@@ -57,7 +57,7 @@ def insert_prices(conn, rows: list[tuple]) -> int:
     return inserted
 
 
-def delete_intraday(conn, symbol: str, date: datetime) -> int:
+def delete_intraday(conn, symbol: str, date: date | datetime) -> int:
     """Delete intraday rows for a symbol on a specific date. Returns rows deleted."""
     with conn.cursor() as cur:
         cur.execute(
@@ -75,7 +75,7 @@ def delete_intraday(conn, symbol: str, date: datetime) -> int:
     return deleted
 
 
-def has_intraday_rows(conn, symbol: str, date: datetime) -> bool:
+def has_intraday_rows(conn, symbol: str, date: date | datetime) -> bool:
     """Check if intraday rows exist for a symbol on a given date."""
     with conn.cursor() as cur:
         cur.execute(
@@ -100,34 +100,6 @@ def delete_stale_intraday(conn) -> int:
             DELETE FROM prices
             WHERE granularity = 'intraday'
               AND time < CURRENT_DATE
-            """
-        )
-        deleted = cur.rowcount
-    conn.commit()
-    return deleted
-
-
-def cleanup_duplicate_daily(conn) -> int:
-    """Remove duplicate daily rows where multiple exist for the same symbol+date.
-
-    Keeps the earliest row per day (the real daily bar) and deletes the rest.
-    This handles mis-tagged intraday data from before the granularity migration.
-    """
-    with conn.cursor() as cur:
-        cur.execute(
-            """
-            DELETE FROM prices p
-            USING (
-                SELECT symbol, time::date AS d, MIN(time) AS keep_time
-                FROM prices
-                WHERE granularity = 'daily'
-                GROUP BY symbol, time::date
-                HAVING COUNT(*) > 1
-            ) dups
-            WHERE p.symbol = dups.symbol
-              AND p.time::date = dups.d
-              AND p.time > dups.keep_time
-              AND p.granularity = 'daily'
             """
         )
         deleted = cur.rowcount

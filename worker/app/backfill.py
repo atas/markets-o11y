@@ -1,16 +1,18 @@
 import logging
 from datetime import datetime, timedelta, timezone
+from typing import cast
 
+import pandas as pd
 import yfinance as yf
 
 from config import AppConfig, SymbolConfig
-from db import get_connection, get_last_timestamp, insert_prices, delete_stale_intraday, cleanup_duplicate_daily
+from db import get_connection, get_last_timestamp, insert_prices, delete_stale_intraday
 from fetcher import fetch_history, _safe_float, _safe_int
 
 logger = logging.getLogger(__name__)
 
 
-def backfill_daily(conn, symbol_config: SymbolConfig, history_years: int) -> int:
+def _backfill_daily(conn, symbol_config: SymbolConfig, history_years: int) -> int:
     """Backfill daily historical data for a symbol. Returns rows inserted."""
     symbol = symbol_config.symbol
     last_daily = get_last_timestamp(conn, symbol, granularity="daily")
@@ -40,7 +42,7 @@ def backfill_daily(conn, symbol_config: SymbolConfig, history_years: int) -> int
     return 0
 
 
-def backfill_intraday(conn, symbol_config: SymbolConfig) -> int:
+def _backfill_intraday(conn, symbol_config: SymbolConfig) -> int:
     """Fetch today's intraday data for a symbol. Returns rows inserted.
 
     Always refetches the full day — ON CONFLICT DO NOTHING handles dedup.
@@ -53,11 +55,12 @@ def backfill_intraday(conn, symbol_config: SymbolConfig) -> int:
         logger.exception("Failed to fetch intraday for %s", symbol)
         return 0
 
-    if df.empty:
+    if df is None or df.empty:
         return 0
 
     rows = []
     for ts, row in df.iterrows():
+        ts = cast(pd.Timestamp, ts)
         close = _safe_float(row.get("Close"))
         if close is None:
             continue
@@ -93,15 +96,10 @@ def backfill_all(config: AppConfig) -> int:
         if stale:
             logger.info("Cleaned up %d stale intraday rows", stale)
 
-        # Remove duplicate daily rows (e.g. mis-tagged intraday from before migration)
-        dupes = cleanup_duplicate_daily(conn)
-        if dupes:
-            logger.info("Cleaned up %d duplicate daily rows", dupes)
-
         for sym_config in config.symbols:
             try:
-                total += backfill_daily(conn, sym_config, config.history_years)
-                total += backfill_intraday(conn, sym_config)
+                total += _backfill_daily(conn, sym_config, config.history_years)
+                total += _backfill_intraday(conn, sym_config)
             except Exception:
                 logger.exception("Failed to backfill %s", sym_config.symbol)
     finally:

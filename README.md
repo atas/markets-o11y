@@ -4,7 +4,7 @@ Self-hosted market observability for stocks, commodities, forex, and crypto. Pow
 
 ```
 ┌────────────┐     ┌──────────────┐     ┌──────────┐
-│  yfinance  │────>│  TimescaleDB │<────│  Grafana  │
+│   worker   │────>│  TimescaleDB │<────│  Grafana  │
 │  (fetcher) │     │  (storage)   │     │  (UI)     │
 └────────────┘     └──────────────┘     └──────────┘
      polls              stores            visualizes
@@ -57,7 +57,7 @@ See `config.example.yaml` for the full default watchlist.
 
 | Service | Image | Purpose |
 |---------|-------|---------|
-| **yfinance** | Custom Python 3.12 | Fetches prices via yfinance, backfills history, polls on interval |
+| **worker** | Custom Python 3.12 | Fetches prices via yfinance, backfills history, polls on interval |
 | **timescaledb** | `timescale/timescaledb:latest-pg16` | Stores all price data in a hypertable |
 | **grafana** | `grafana/grafana-oss:latest` | Pre-provisioned dashboards and example alerts |
 

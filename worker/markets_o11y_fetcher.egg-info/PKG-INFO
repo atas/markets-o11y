@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: markets-o11y-fetcher
+Version: 0.1.0
+Requires-Python: >=3.12
+Requires-Dist: yfinance>=0.2.40
+Requires-Dist: psycopg2-binary>=2.9
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: schedule>=1.2

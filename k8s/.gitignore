@@ -1,0 +1,7 @@
+# Environment secrets
+.env.prod
+.env.staging
+
+# Generated secrets
+kustomize/**/secrets.yaml
+kustomize/**/ghcr-secret.yaml
