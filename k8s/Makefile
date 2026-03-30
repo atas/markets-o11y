@@ -5,7 +5,7 @@
 .DEFAULT_GOAL := help
 
 IMAGE := ghcr.io/atas/markets-o11y-worker
-TAG   ?= sha-$(shell git -C .. rev-parse --short HEAD)
+TAG   ?= latest
 
 help: ## Show this help message
 	@echo "markets-o11y Kubernetes Deployment"

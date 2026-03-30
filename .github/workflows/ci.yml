@@ -3,11 +3,7 @@ name: CI
 on:
   push:
     branches: [main]
-    paths:
-      - "worker/**"
   pull_request:
-    paths:
-      - "worker/**"
   workflow_dispatch:
 
 env:
@@ -33,6 +29,7 @@ jobs:
   docker-worker:
     name: Build & Push worker Image
     needs: [test-worker]
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
