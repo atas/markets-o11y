@@ -52,6 +52,8 @@ spec:
               value: "true"
             - name: GF_AUTH_ANONYMOUS_ORG_ROLE
               value: "Admin"
+            - name: GF_USERS_DEFAULT_THEME
+              value: "sapphiredusk"
             - name: GF_DATE_FORMATS_FULL_DATE
               value: "DD/MM/YYYY HH:mm:ss"
             - name: GF_DATE_FORMATS_INTERVAL_DAY
