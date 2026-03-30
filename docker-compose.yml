@@ -36,17 +36,18 @@ services:
     image: grafana/grafana-oss:latest
     environment:
       GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:-admin}
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
       GF_DATE_FORMATS_FULL_DATE: "DD/MM/YYYY HH:mm:ss"
       GF_DATE_FORMATS_INTERVAL_DAY: DD/MM
       GF_DATE_FORMATS_INTERVAL_MONTH: MM/YYYY
-      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/markets.json
       POSTGRES_USER: ${POSTGRES_USER:-markets}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-markets}
       POSTGRES_DB: ${POSTGRES_DB:-markets}
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
-      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     ports:
       - "3000:3000"
     depends_on:

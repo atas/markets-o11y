@@ -1130,7 +1130,7 @@
           "refId": "A"
         }
       ],
-      "title": "NVDA ❇️",
+      "title": "NVDA \u2747\ufe0f",
       "type": "timeseries"
     },
     {
@@ -1237,7 +1237,7 @@
           "refId": "A"
         }
       ],
-      "title": "AMD",
+      "title": "AMD \u2197\ufe0f",
       "type": "timeseries"
     },
     {
@@ -1344,7 +1344,7 @@
           "refId": "A"
         }
       ],
-      "title": "INTC",
+      "title": "Intel / INTC \ud83d\udcc0",
       "type": "timeseries"
     },
     {
@@ -1451,7 +1451,7 @@
           "refId": "A"
         }
       ],
-      "title": "Broadcom",
+      "title": "Broadcom \ud83d\udcc8",
       "type": "timeseries"
     },
     {
@@ -1558,7 +1558,7 @@
           "refId": "A"
         }
       ],
-      "title": "TSMC",
+      "title": "TSMC \ud83c\udf6a",
       "type": "timeseries"
     },
     {
@@ -1665,7 +1665,7 @@
           "refId": "A"
         }
       ],
-      "title": "ASML",
+      "title": "ASML \u2728",
       "type": "timeseries"
     },
     {
@@ -1793,7 +1793,7 @@
           "refId": "A"
         }
       ],
-      "title": "AAPL",
+      "title": "AAPL \ud83c\udf4e",
       "type": "timeseries"
     },
     {
@@ -1900,7 +1900,7 @@
           "refId": "A"
         }
       ],
-      "title": "TSLA",
+      "title": "TSLA \ud83d\ude97",
       "type": "timeseries"
     },
     {
@@ -2007,7 +2007,7 @@
           "refId": "A"
         }
       ],
-      "title": "ORCL",
+      "title": "ORCL \ud83d\udd34",
       "type": "timeseries"
     },
     {
@@ -2114,7 +2114,7 @@
           "refId": "A"
         }
       ],
-      "title": "GOOGL",
+      "title": "GOOGL \ud83d\udd0e",
       "type": "timeseries"
     },
     {
@@ -2221,7 +2221,7 @@
           "refId": "A"
         }
       ],
-      "title": "AMZN",
+      "title": "AMZN \ud83d\uded2",
       "type": "timeseries"
     },
     {
@@ -2350,7 +2350,7 @@
           }
         }
       ],
-      "title": "MSFT",
+      "title": "MSFT \ud83e\ude9f",
       "type": "timeseries"
     },
     {
@@ -2457,7 +2457,7 @@
           "refId": "A"
         }
       ],
-      "title": "ETSY",
+      "title": "ETSY \ud83c\udf81",
       "type": "timeseries"
     },
     {
@@ -2564,7 +2564,7 @@
           "refId": "A"
         }
       ],
-      "title": "Snowflake",
+      "title": "Snowflake \u2744\ufe0f",
       "type": "timeseries"
     },
     {
@@ -2684,7 +2684,7 @@
           "refId": "A"
         }
       ],
-      "title": "Boeing / BA",
+      "title": "Boeing / BA \u2708\ufe0f",
       "type": "timeseries"
     },
     {
@@ -2791,7 +2791,7 @@
           "refId": "A"
         }
       ],
-      "title": "Lockheed Martin",
+      "title": "Lockheed Martin \ud83d\udee1\ufe0f",
       "type": "timeseries"
     },
     {
