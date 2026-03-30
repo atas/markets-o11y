@@ -5,7 +5,7 @@
 .DEFAULT_GOAL := help
 
 IMAGE := ghcr.io/atas/markets-o11y-worker
-TAG   ?= sha-e24fa15
+TAG   ?= sha-$(shell git -C .. rev-parse --short HEAD)
 
 help: ## Show this help message
 	@echo "markets-o11y Kubernetes Deployment"
@@ -15,9 +15,9 @@ help: ## Show this help message
 	@echo "Targets:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
-apply-prod: ## Apply manifests to production cluster
-	@echo "Applying to production..."
-	kubectl apply -k kustomize/overlays/prod
+apply-prod: ## Apply all manifests with worker image tag (usage: make apply-prod [TAG=sha-abc1234])
+	@echo "Applying to production with $(IMAGE):$(TAG)..."
+	kubectl kustomize kustomize/overlays/prod | sed 's|image: $(IMAGE):.*|image: $(IMAGE):$(TAG)|' | kubectl apply -f -
 	@echo "Done! Check pods with: kubectl get pods -n markets-o11y-prod"
 
 apply-secrets-prod: ## Apply secrets to production (manual, not in kustomize)
@@ -49,10 +49,9 @@ status-prod: ## Show status of all production resources
 	@echo "\n=== PVCs ==="
 	kubectl get pvc -n markets-o11y-prod
 
-deploy-worker-prod: ## Update worker image tag and restart (usage: make deploy-worker-prod TAG=sha-abc1234)
-	@cd kustomize/overlays/prod && \
-		kustomize edit set image $(IMAGE):$(TAG)
-	kubectl apply -k kustomize/overlays/prod
+deploy-worker-prod: ## Deploy worker with git SHA tag (usage: make deploy-worker-prod [TAG=sha-abc1234])
+	@echo "Deploying $(IMAGE):$(TAG)"
+	kubectl set image deployment/worker worker=$(IMAGE):$(TAG) -n markets-o11y-prod
 	kubectl rollout status deployment/worker -n markets-o11y-prod
 
 logs-worker: ## Tail worker logs

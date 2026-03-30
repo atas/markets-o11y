@@ -13,8 +13,3 @@ labels:
 
 # Secrets are managed manually - see k8s/manual/prod/ for templates
 # Run: make apply-secrets-prod (from k8s/ directory)
-
-# Image customization
-images:
-  - name: ghcr.io/atas/markets-o11y-worker
-    newTag: sha-e24fa15
