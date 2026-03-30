@@ -6,8 +6,9 @@ import pandas as pd
 import yfinance as yf
 
 from config import AppConfig, SymbolConfig
-from db import get_connection, get_last_timestamp, insert_prices, delete_stale_intraday
-from fetcher import fetch_history, _safe_float, _safe_int
+from utils.convert import safe_float, safe_int
+from db import PriceRow, get_connection, get_last_timestamp, insert_prices, delete_stale_intraday
+from yf.fetcher import fetch_date_range
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,7 @@ def _backfill_daily(conn, symbol_config: SymbolConfig, history_years: int) -> in
         start = last_daily + timedelta(days=1)
         logger.info("Filling %d-day daily gap for %s", gap_days, symbol)
 
-    rows = fetch_history(
+    rows = fetch_date_range(
         symbol=symbol,
         start=start.strftime("%Y-%m-%d"),
         end=now.strftime("%Y-%m-%d"),
@@ -58,22 +59,22 @@ def _backfill_intraday(conn, symbol_config: SymbolConfig) -> int:
     if df is None or df.empty:
         return 0
 
-    rows = []
+    rows: list[PriceRow] = []
     for ts, row in df.iterrows():
         ts = cast(pd.Timestamp, ts)
-        close = _safe_float(row.get("Close"))
+        close = safe_float(row.get("Close"))
         if close is None:
             continue
-        rows.append((
-            ts.to_pydatetime(),
-            symbol,
-            _safe_float(row.get("Open")),
-            _safe_float(row.get("High")),
-            _safe_float(row.get("Low")),
-            close,
-            _safe_int(row.get("Volume")),
-            symbol_config.category,
-            "intraday",
+        rows.append(PriceRow(
+            time=ts.to_pydatetime(),
+            symbol=symbol,
+            open=safe_float(row.get("Open")),
+            high=safe_float(row.get("High")),
+            low=safe_float(row.get("Low")),
+            close=close,
+            volume=safe_int(row.get("Volume")),
+            category=symbol_config.category,
+            granularity="intraday",
         ))
 
     if rows:

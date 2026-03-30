@@ -8,9 +8,9 @@ import pandas as pd
 import yfinance as yf
 
 from config import AppConfig
-from db import get_connection, has_intraday_rows, insert_prices, delete_intraday, delete_stale_intraday
-from fetcher import _safe_float, _safe_int
-from markets import get_market_close_utc
+from utils.convert import safe_float, safe_int
+from db import PriceRow, get_connection, has_intraday_rows, insert_prices, delete_intraday, delete_stale_intraday
+from config.markets import get_market_close_utc
 
 logger = logging.getLogger(__name__)
 
@@ -21,10 +21,10 @@ def _is_past_close(symbol: str, now: datetime) -> bool:
     return (now.hour, now.minute) > (close_h, close_m)
 
 
-def _fetch_daily_bar(symbol: str, target_date: date, category: str) -> tuple | None:
+def _fetch_daily_bar(symbol: str, target_date: date, category: str) -> PriceRow | None:
     """Try to fetch the official daily bar for a specific date.
 
-    Returns a row tuple if available, None if Yahoo hasn't finalized it yet.
+    Returns a PriceRow if available, None if Yahoo hasn't finalized it yet.
     """
     try:
         ticker = yf.Ticker(symbol)
@@ -39,19 +39,19 @@ def _fetch_daily_bar(symbol: str, target_date: date, category: str) -> tuple | N
     for ts, row in df.iterrows():
         ts = cast(pd.Timestamp, ts)
         if ts.date() == target_date:
-            close = _safe_float(row.get("Close"))
+            close = safe_float(row.get("Close"))
             if close is None:
                 return None
-            return (
-                ts.to_pydatetime(),
-                symbol,
-                _safe_float(row.get("Open")),
-                _safe_float(row.get("High")),
-                _safe_float(row.get("Low")),
-                close,
-                _safe_int(row.get("Volume")),
-                category,
-                "daily",
+            return PriceRow(
+                time=ts.to_pydatetime(),
+                symbol=symbol,
+                open=safe_float(row.get("Open")),
+                high=safe_float(row.get("High")),
+                low=safe_float(row.get("Low")),
+                close=close,
+                volume=safe_int(row.get("Volume")),
+                category=category,
+                granularity="daily",
             )
     return None
 

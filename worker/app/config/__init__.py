@@ -4,7 +4,7 @@ from pathlib import Path
 
 import yaml
 
-from .utils.time import parse_interval
+from utils.time import parse_interval
 
 logger = logging.getLogger(__name__)
 

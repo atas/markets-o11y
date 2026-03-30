@@ -1,11 +1,24 @@
 import logging
 import os
 from datetime import date, datetime
+from typing import NamedTuple
 
 import psycopg2
 from psycopg2.extras import execute_values
 
 logger = logging.getLogger(__name__)
+
+
+class PriceRow(NamedTuple):
+    time: datetime
+    symbol: str
+    open: float | None
+    high: float | None
+    low: float | None
+    close: float
+    volume: int | None
+    category: str
+    granularity: str
 
 
 def get_connection():
@@ -33,10 +46,9 @@ def get_last_timestamp(conn, symbol: str, granularity: str | None = None) -> dat
         return row[0] if row and row[0] else None
 
 
-def insert_prices(conn, rows: list[tuple]) -> int:
+def insert_prices(conn, rows: list[PriceRow]) -> int:
     """Batch insert price rows. Returns number of rows inserted.
 
-    Each row: (time, symbol, open, high, low, close, volume, category, granularity)
     Duplicates are silently skipped via ON CONFLICT.
     """
     if not rows:

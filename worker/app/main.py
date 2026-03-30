@@ -3,11 +3,11 @@ import time
 
 import schedule
 
-from backfill import backfill_all
+from yf.backfill import backfill_all
 from compact import try_compact
-from config import load_config
+from config import AppConfig, load_config
 from db import get_connection, insert_prices
-from fetcher import fetch_current
+from yf.fetcher import fetch_current
 
 logging.basicConfig(
     level=logging.INFO,
@@ -16,7 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def poll(config):
+def poll(config: AppConfig):
     """Fetch current prices for all configured symbols and insert into DB."""
     symbols = [{"symbol": s.symbol, "category": s.category} for s in config.symbols]
     logger.info("Polling %d symbols", len(symbols))
