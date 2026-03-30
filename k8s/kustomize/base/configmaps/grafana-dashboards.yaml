@@ -47,7 +47,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "dark-red",
+                "fixedColor": "semi-dark-green",
                 "mode": "fixed"
               },
               "custom": {
@@ -93,12 +93,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "red",
-                    "value": 480
+                    "color": "semi-dark-blue",
+                    "value": 550
                   },
                   {
                     "color": "dark-red",
-                    "value": 620
+                    "value": 590
                   }
                 ]
               },
@@ -139,11 +139,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"VOO\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VOO'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"VOO\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VOO'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "S&P 500 VOO",
+          "title": "S&P 500 VOO 5\ufe0f\u20e30\ufe0f\u20e30\ufe0f\u20e3",
           "type": "timeseries"
         },
         {
@@ -200,8 +200,8 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "blue",
-                    "value": 38000
+                    "color": "semi-dark-blue",
+                    "value": 42000
                   },
                   {
                     "color": "dark-red",
@@ -246,11 +246,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"^DJI\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = '^DJI'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"^DJI\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = '^DJI'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Dow Jones (^DJI)",
+          "title": "Dow Jones (^DJI) \ud83c\udfdb\ufe0f",
           "type": "timeseries"
         },
         {
@@ -261,7 +261,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "dark-red",
+                "fixedColor": "semi-dark-purple",
                 "mode": "fixed"
               },
               "custom": {
@@ -307,12 +307,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "red",
-                    "value": 120
+                    "color": "semi-dark-purple",
+                    "value": 140
                   },
                   {
                     "color": "dark-red",
-                    "value": 165
+                    "value": 160
                   }
                 ]
               },
@@ -353,11 +353,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"VWRD.L\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VWRD.L'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"VWRD.L\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VWRD.L'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Vanguard FTSE All-World / VWRD.L",
+          "title": "Vanguard FTSE All-World / VWRD.L \ud83c\udf0d",
           "type": "timeseries"
         },
         {
@@ -368,7 +368,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "dark-red",
+                "fixedColor": "dark-blue",
                 "mode": "fixed"
               },
               "custom": {
@@ -414,12 +414,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "red",
-                    "value": 120
+                    "color": "dark-blue",
+                    "value": 140
                   },
                   {
                     "color": "dark-red",
-                    "value": 160
+                    "value": 155
                   }
                 ]
               },
@@ -460,11 +460,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"VTSAX\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VTSAX'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"VTSAX\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VTSAX'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Vanguard US Total / VTSAX",
+          "title": "Vanguard US Total / VTSAX \ud83c\uddfa\ud83c\uddf8",
           "type": "timeseries"
         },
         {
@@ -534,8 +534,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "yellow",
+                    "color": "light-blue",
                     "value": 2500
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 4000
                   },
                   {
                     "color": "dark-red",
@@ -580,7 +584,7 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"GC=F\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'GC=F'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"GC=F\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'GC=F'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
@@ -595,7 +599,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "light-blue",
+                "fixedColor": "#C0C0C0",
                 "mode": "fixed"
               },
               "custom": {
@@ -641,12 +645,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "light-blue",
-                    "value": 30
+                    "color": "#C0C0C0",
+                    "value": 60
                   },
                   {
                     "color": "dark-red",
-                    "value": 100
+                    "value": 80
                   }
                 ]
               },
@@ -687,11 +691,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"SI=F\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'SI=F'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"SI=F\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'SI=F'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Silver (SI=F)",
+          "title": "Silver (SI=F) \u26aa\ufe0f",
           "type": "timeseries"
         },
         {
@@ -748,12 +752,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "purple",
+                    "color": "dark-purple",
                     "value": 60
                   },
                   {
                     "color": "dark-red",
-                    "value": 110
+                    "value": 90
                   }
                 ]
               },
@@ -794,11 +798,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"CL=F\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'CL=F'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"CL=F\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'CL=F'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Crude Oil (CL=F)",
+          "title": "Crude Oil (CL=F) \ud83d\udee2\ufe0f",
           "type": "timeseries"
         },
         {
@@ -855,8 +859,8 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "orange",
-                    "value": 50000
+                    "color": "semi-dark-orange",
+                    "value": 70000
                   },
                   {
                     "color": "dark-red",
@@ -901,11 +905,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"BTC-USD\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'BTC-USD'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"BTC-USD\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'BTC-USD'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Bitcoin (BTC-USD)",
+          "title": "Bitcoin (BTC-USD) \u20bf",
           "type": "timeseries"
         },
         {
@@ -962,12 +966,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "purple",
-                    "value": 2500
+                    "color": "dark-purple",
+                    "value": 1800
                   },
                   {
                     "color": "dark-red",
-                    "value": 4500
+                    "value": 4000
                   }
                 ]
               },
@@ -1008,11 +1012,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"ETH-USD\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'ETH-USD'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"ETH-USD\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'ETH-USD'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Ethereum (ETH-USD)",
+          "title": "Ethereum (ETH-USD) \u27e0",
           "type": "timeseries"
         },
         {
@@ -1082,12 +1086,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "light-green",
-                    "value": 120
+                    "color": "semi-dark-green",
+                    "value": 110
                   },
                   {
                     "color": "dark-red",
-                    "value": 195
+                    "value": 180
                   }
                 ]
               },
@@ -1128,11 +1132,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"NVDA\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'NVDA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"NVDA\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'NVDA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "NVDA",
+          "title": "NVDA \u2747\ufe0f",
           "type": "timeseries"
         },
         {
@@ -1143,7 +1147,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "dark-red",
+                "fixedColor": "semi-dark-orange",
                 "mode": "fixed"
               },
               "custom": {
@@ -1189,12 +1193,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "red",
-                    "value": 150
+                    "color": "semi-dark-orange",
+                    "value": 100
                   },
                   {
                     "color": "dark-red",
-                    "value": 250
+                    "value": 220
                   }
                 ]
               },
@@ -1235,11 +1239,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"AMD\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'AMD'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"AMD\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'AMD'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "AMD",
+          "title": "AMD \u2197\ufe0f",
           "type": "timeseries"
         },
         {
@@ -1297,11 +1301,11 @@ data:
                   },
                   {
                     "color": "blue",
-                    "value": 35
+                    "value": 25
                   },
                   {
                     "color": "dark-red",
-                    "value": 55
+                    "value": 45
                   }
                 ]
               },
@@ -1342,11 +1346,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"INTC\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'INTC'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"INTC\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'INTC'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "INTC",
+          "title": "Intel / INTC \ud83d\udcc0",
           "type": "timeseries"
         },
         {
@@ -1403,12 +1407,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "blue",
-                    "value": 200
+                    "color": "semi-dark-blue",
+                    "value": 100
                   },
                   {
                     "color": "dark-red",
-                    "value": 380
+                    "value": 190
                   }
                 ]
               },
@@ -1449,11 +1453,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"AVGO\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'NVDA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"AVGO\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'NVDA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Broadcom",
+          "title": "Broadcom \ud83d\udcc8",
           "type": "timeseries"
         },
         {
@@ -1464,7 +1468,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "semi-dark-red",
+                "fixedColor": "dark-purple",
                 "mode": "fixed"
               },
               "custom": {
@@ -1510,12 +1514,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "red",
-                    "value": 200
+                    "color": "dark-purple",
+                    "value": 100
                   },
                   {
                     "color": "dark-red",
-                    "value": 360
+                    "value": 190
                   }
                 ]
               },
@@ -1556,11 +1560,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"TSM\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'NVDA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"TSM\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'NVDA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "TSMC",
+          "title": "TSMC \ud83c\udf6a",
           "type": "timeseries"
         },
         {
@@ -1617,12 +1621,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "orange",
+                    "color": "semi-dark-orange",
                     "value": 700
                   },
                   {
                     "color": "dark-red",
-                    "value": 1400
+                    "value": 1300
                   }
                 ]
               },
@@ -1663,11 +1667,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"ASML\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'ASML'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"ASML\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'ASML'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "ASML",
+          "title": "ASML \u2728",
           "type": "timeseries"
         },
         {
@@ -1737,12 +1741,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "blue",
-                    "value": 200
+                    "color": "super-light-blue",
+                    "value": 190
                   },
                   {
                     "color": "dark-red",
-                    "value": 270
+                    "value": 260
                   }
                 ]
               },
@@ -1791,11 +1795,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"AAPL\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'AAPL'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"AAPL\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'AAPL'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "AAPL",
+          "title": "AAPL \ud83c\udf4e",
           "type": "timeseries"
         },
         {
@@ -1806,7 +1810,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "dark-red",
+                "fixedColor": "semi-dark-red",
                 "mode": "fixed"
               },
               "custom": {
@@ -1852,12 +1856,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "red",
-                    "value": 280
+                    "color": "semi-dark-red",
+                    "value": 250
                   },
                   {
                     "color": "dark-red",
-                    "value": 450
+                    "value": 430
                   }
                 ]
               },
@@ -1898,11 +1902,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"TSLA\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'TSLA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"TSLA\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'TSLA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "TSLA",
+          "title": "TSLA \ud83d\ude97",
           "type": "timeseries"
         },
         {
@@ -1913,7 +1917,7 @@ data:
           "fieldConfig": {
             "defaults": {
               "color": {
-                "fixedColor": "dark-red",
+                "fixedColor": "dark-green",
                 "mode": "fixed"
               },
               "custom": {
@@ -1959,12 +1963,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "red",
-                    "value": 120
+                    "color": "dark-green",
+                    "value": 140
                   },
                   {
                     "color": "dark-red",
-                    "value": 300
+                    "value": 280
                   }
                 ]
               },
@@ -2005,11 +2009,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"ORCL\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'ORCL'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"ORCL\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'ORCL'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "ORCL",
+          "title": "ORCL \ud83d\udd34",
           "type": "timeseries"
         },
         {
@@ -2066,12 +2070,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "super-light-green",
-                    "value": 160
+                    "color": "semi-dark-green",
+                    "value": 170
                   },
                   {
                     "color": "dark-red",
-                    "value": 320
+                    "value": 300
                   }
                 ]
               },
@@ -2112,11 +2116,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"GOOGL\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'GOOGL'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"GOOGL\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'GOOGL'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "GOOGL",
+          "title": "GOOGL \ud83d\udd0e",
           "type": "timeseries"
         },
         {
@@ -2173,8 +2177,8 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "orange",
-                    "value": 170
+                    "color": "semi-dark-orange",
+                    "value": 180
                   },
                   {
                     "color": "dark-red",
@@ -2219,11 +2223,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"AMZN\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'AMZN'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"AMZN\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'AMZN'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "AMZN",
+          "title": "AMZN \ud83d\uded2",
           "type": "timeseries"
         },
         {
@@ -2283,12 +2287,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "blue",
-                    "value": 400
+                    "color": "semi-dark-blue",
+                    "value": 370
                   },
                   {
                     "color": "dark-red",
-                    "value": 500
+                    "value": 430
                   }
                 ]
               },
@@ -2331,7 +2335,7 @@ data:
               "editorMode": "code",
               "format": "time_series",
               "rawQuery": true,
-              "rawSql": "SELECT time, close as \"MSFT\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'MSFT'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"MSFT\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'MSFT'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A",
               "sql": {
                 "columns": [
@@ -2352,7 +2356,7 @@ data:
               }
             }
           ],
-          "title": "MSFT",
+          "title": "MSFT \ud83e\ude9f",
           "type": "timeseries"
         },
         {
@@ -2409,12 +2413,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "orange",
-                    "value": 50
+                    "color": "semi-dark-orange",
+                    "value": 45
                   },
                   {
                     "color": "dark-red",
-                    "value": 250
+                    "value": 65
                   }
                 ]
               },
@@ -2455,11 +2459,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"ETSY\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'ETSY'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"ETSY\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'ETSY'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "ETSY",
+          "title": "ETSY \ud83c\udf81",
           "type": "timeseries"
         },
         {
@@ -2521,7 +2525,7 @@ data:
                   },
                   {
                     "color": "dark-red",
-                    "value": 350
+                    "value": 250
                   }
                 ]
               },
@@ -2562,11 +2566,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"SNOW\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'SNOW'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"SNOW\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'SNOW'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Snowflake",
+          "title": "Snowflake \u2744\ufe0f",
           "type": "timeseries"
         },
         {
@@ -2636,12 +2640,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "blue",
-                    "value": 180
+                    "color": "semi-dark-blue",
+                    "value": 150
                   },
                   {
                     "color": "dark-red",
-                    "value": 400
+                    "value": 230
                   }
                 ]
               },
@@ -2682,11 +2686,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"BA\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'BA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"BA\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'BA'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Boeing / BA",
+          "title": "Boeing / BA \u2708\ufe0f",
           "type": "timeseries"
         },
         {
@@ -2743,12 +2747,12 @@ data:
                     "value": 0
                   },
                   {
-                    "color": "blue",
-                    "value": 500
+                    "color": "dark-blue",
+                    "value": 450
                   },
                   {
                     "color": "dark-red",
-                    "value": 650
+                    "value": 620
                   }
                 ]
               },
@@ -2789,11 +2793,11 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time, close as \"LMT\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'LMT'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"LMT\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'LMT'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
-          "title": "Lockheed Martin",
+          "title": "Lockheed Martin \ud83d\udee1\ufe0f",
           "type": "timeseries"
         },
         {
@@ -2906,7 +2910,7 @@ data:
                     "uid": "timescaledb"
                   },
                   "format": "time_series",
-                  "rawSql": "SELECT time, close as \"EURTRY=X\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'EURTRY=X'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+                  "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"EURTRY=X\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'EURTRY=X'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
                   "refId": "A"
                 }
               ],
@@ -3013,7 +3017,7 @@ data:
                     "uid": "timescaledb"
                   },
                   "format": "time_series",
-                  "rawSql": "SELECT time, close as \"GBPUSD=X\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'GBPUSD=X'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+                  "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"GBPUSD=X\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'GBPUSD=X'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
                   "refId": "A"
                 }
               ],
@@ -3120,7 +3124,7 @@ data:
                     "uid": "timescaledb"
                   },
                   "format": "time_series",
-                  "rawSql": "SELECT time, close as \"EURUSD=X\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'EURUSD=X'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nORDER BY time",
+                  "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"EURUSD=X\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'EURUSD=X'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
                   "refId": "A"
                 }
               ],
