@@ -57,9 +57,9 @@ def fetch_current(symbols: list[dict]) -> list[PriceRow]:
 
     tickers = [s["symbol"] for s in symbols]
     category_map = {s["symbol"]: s["category"] for s in symbols}
-    start = datetime.now(timezone.utc) - timedelta(minutes=16)
 
     try:
+        start = datetime.now(timezone.utc) - timedelta(minutes=60)
         df = yf.download(tickers, start=start, interval="15m", group_by="ticker", progress=False)
     except Exception:
         logger.exception("Failed to fetch current prices")
