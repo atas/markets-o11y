@@ -3,12 +3,12 @@ from unittest.mock import MagicMock, patch
 
 from config import SymbolConfig
 from db import PriceRow
-from yf.backfill import _backfill_daily, _backfill_intraday
+from libs.backfill import _backfill_daily, _backfill_intraday
 
 
 class TestBackfillDaily:
-    @patch("yf.backfill.insert_prices")
-    @patch("yf.backfill.get_last_timestamp", return_value=None)
+    @patch("libs.backfill.insert_prices")
+    @patch("libs.backfill.get_last_timestamp", return_value=None)
     def test_fresh_backfill_fetches_and_inserts(self, mock_last_ts, mock_insert):
         mock_insert.return_value = 5
         conn = MagicMock()
@@ -27,8 +27,8 @@ class TestBackfillDaily:
             assert row.granularity == "daily"
         assert result == 5
 
-    @patch("yf.backfill.insert_prices")
-    @patch("yf.backfill.get_last_timestamp")
+    @patch("libs.backfill.insert_prices")
+    @patch("libs.backfill.get_last_timestamp")
     def test_recent_data_skips_fetch(self, mock_last_ts, mock_insert):
         mock_last_ts.return_value = datetime.now(timezone.utc) - timedelta(hours=12)
         conn = MagicMock()
@@ -41,7 +41,7 @@ class TestBackfillDaily:
 
 
 class TestBackfillIntraday:
-    @patch("yf.backfill.insert_prices")
+    @patch("libs.backfill.insert_prices")
     def test_intraday_no_crash(self, mock_insert):
         """Intraday may return empty on weekends — just verify no crash."""
         mock_insert.return_value = 0

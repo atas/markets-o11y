@@ -7,7 +7,7 @@ import yfinance as yf
 
 from config import AppConfig, SymbolConfig
 from utils.convert import safe_float, safe_int
-from db import PriceRow, get_connection, get_last_timestamp, insert_prices, delete_stale_intraday
+from db import PriceRow, get_connection, get_last_timestamp, insert_prices
 from yf.fetcher import fetch_date_range
 
 logger = logging.getLogger(__name__)
@@ -92,11 +92,6 @@ def backfill_all(config: AppConfig) -> int:
     conn = get_connection()
     total = 0
     try:
-        # Clean up any stale intraday rows from previous days
-        stale = delete_stale_intraday(conn)
-        if stale:
-            logger.info("Cleaned up %d stale intraday rows", stale)
-
         for sym_config in config.symbols:
             try:
                 total += _backfill_daily(conn, sym_config, config.history_years)

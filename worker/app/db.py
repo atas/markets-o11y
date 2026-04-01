@@ -104,16 +104,16 @@ def has_intraday_rows(conn, symbol: str, date: date | datetime) -> bool:
         return cur.fetchone() is not None
 
 
-def delete_stale_intraday(conn) -> int:
-    """Delete any intraday rows from previous days (safety net)."""
+def get_stale_intraday_dates(conn) -> list[tuple[str, date, str]]:
+    """Return distinct (symbol, date, category) tuples with intraday rows from before today."""
     with conn.cursor() as cur:
         cur.execute(
             """
-            DELETE FROM prices
+            SELECT DISTINCT symbol, time::date AS d, category
+            FROM prices
             WHERE granularity = 'intraday'
               AND time < CURRENT_DATE
+            ORDER BY symbol, d
             """
         )
-        deleted = cur.rowcount
-    conn.commit()
-    return deleted
+        return [(row[0], row[1], row[2]) for row in cur.fetchall()]

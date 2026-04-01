@@ -3,26 +3,19 @@ import time
 
 import schedule
 
-from yf.backfill import backfill_all
-from compact import try_compact
+from libs.backfill import backfill_all
+from libs.compact import try_compact
 from config import AppConfig, load_config
 from db import get_connection, insert_prices
 from yf.fetcher import fetch_current
 
-class _YFinanceDelistFilter(logging.Filter):
-    """Downgrade yfinance 'possibly delisted' errors to warnings."""
-    def filter(self, record):
-        if record.levelno == logging.ERROR and "possibly delisted; no price data found" in record.getMessage():
-            record.levelno = logging.WARNING
-            record.levelname = "WARNING"
-        return True
-
+from utils.log_utils import YFinanceDelistFilter
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
-logging.getLogger("yfinance").addFilter(_YFinanceDelistFilter())
+logging.getLogger("yfinance").addFilter(YFinanceDelistFilter())
 logger = logging.getLogger(__name__)
 
 
@@ -43,8 +36,8 @@ def poll(config: AppConfig):
     finally:
         conn.close()
 
-    # Try to compact intraday data for symbols whose market has closed
-    try_compact(config)
+    # Try to compact previous days' intraday data
+    try_compact()
 
 
 def main():
