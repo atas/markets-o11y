@@ -32,7 +32,7 @@ data:
 
       etfs:
         - symbol: VOO       # Vanguard S&P 500 ETF
-        - symbol: VTSAX     # Vanguard Total Stock Market
+        - symbol: VTI       # Vanguard Total Stock Market ETF
         - symbol: VWRD.L    # Vanguard FTSE All-World (London)
 
       commodities:

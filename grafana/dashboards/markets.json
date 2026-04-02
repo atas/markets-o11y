@@ -18,6 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 2,
+  "id": 2978382058307584,
   "links": [],
   "panels": [
     {
@@ -454,11 +455,11 @@
             "uid": "timescaledb"
           },
           "format": "time_series",
-          "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"VTSAX\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VTSAX'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"VTI\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VTI'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
           "refId": "A"
         }
       ],
-      "title": "Vanguard US Total / VTSAX \ud83c\uddfa\ud83c\uddf8",
+      "title": "Vanguard US Total / VTI \ud83c\uddfa\ud83c\uddf8",
       "type": "timeseries"
     },
     {
@@ -3148,5 +3149,6 @@
   "timezone": "browser",
   "title": "Markets",
   "uid": "markets-o11y",
+  "version": 20,
   "weekStart": ""
 }
