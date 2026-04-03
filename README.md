@@ -12,7 +12,7 @@ Self-hosted market observability for stocks, commodities, forex, and crypto.
   every 15min       (hypertable)         + alerts
 ```
 
-No accounts. No API keys. No cloud. Just `docker compose up`.
+No accounts. No API keys. No cloud. Just `docker compose up` or deploy to Kubernetes.
 
 > **Note:** This project uses [yfinance](https://github.com/ranaroussi/yfinance) to fetch data from Yahoo Finance. It does not distribute any data. Each user is responsible for complying with Yahoo's [Terms of Service](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html).
 
