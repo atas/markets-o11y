@@ -11,8 +11,7 @@ defaults:
   fetch_interval: 15m
   history_years: 5
 symbols:
-  stocks:
-    - symbol: AAPL
+  - symbol: AAPL
 """)
         result = load_config(cfg)
 
@@ -29,8 +28,7 @@ symbols:
 defaults:
   fetch_interval: 15m
 symbols:
-  stocks:
-    - symbol: AAPL
+  - symbol: AAPL
 """)
         result = load_config(cfg)
         assert result.history_years == 10
@@ -40,8 +38,7 @@ symbols:
         cfg.write_text("""
 defaults: {}
 symbols:
-  stocks:
-    - symbol: AAPL
+  - symbol: AAPL
 """)
         result = load_config(cfg)
         assert result.fetch_interval == 900
@@ -52,8 +49,7 @@ symbols:
 defaults:
   fetch_interval: 30m
 symbols:
-  stocks:
-    - AAPL
+  - AAPL
 """)
         result = load_config(cfg)
         assert result.symbols[0].symbol == "AAPL"
@@ -65,25 +61,11 @@ symbols:
 defaults:
   fetch_interval: 15m
 symbols:
-  stocks:
-    - symbol: AAPL
-      fetch_interval: 5m
+  - symbol: AAPL
+    fetch_interval: 5m
 """)
         result = load_config(cfg)
         assert result.symbols[0].fetch_interval == 300
-
-    def test_non_list_category_is_skipped(self, tmp_path):
-        cfg = tmp_path / "config.yaml"
-        cfg.write_text("""
-defaults:
-  fetch_interval: 15m
-symbols:
-  stocks:
-    - symbol: AAPL
-  broken: not_a_list
-""")
-        result = load_config(cfg)
-        assert len(result.symbols) == 1
 
     def test_non_str_non_dict_item_is_skipped(self, tmp_path):
         cfg = tmp_path / "config.yaml"
@@ -91,25 +73,22 @@ symbols:
 defaults:
   fetch_interval: 15m
 symbols:
-  stocks:
-    - symbol: AAPL
-    - 42
-    - true
+  - symbol: AAPL
+  - 42
+  - true
 """)
         result = load_config(cfg)
         assert len(result.symbols) == 1
 
-    def test_multiple_categories_flatten(self, tmp_path):
+    def test_multiple_symbols(self, tmp_path):
         cfg = tmp_path / "config.yaml"
         cfg.write_text("""
 defaults:
   fetch_interval: 15m
 symbols:
-  stocks:
-    - symbol: AAPL
-    - symbol: GOOGL
-  crypto:
-    - symbol: BTC-USD
+  - symbol: AAPL
+  - symbol: GOOGL
+  - symbol: BTC-USD
 """)
         result = load_config(cfg)
         assert len(result.symbols) == 3
@@ -117,6 +96,16 @@ symbols:
         assert "AAPL" in symbols
         assert "GOOGL" in symbols
         assert "BTC-USD" in symbols
+
+    def test_empty_symbols_list(self, tmp_path):
+        cfg = tmp_path / "config.yaml"
+        cfg.write_text("""
+defaults:
+  fetch_interval: 15m
+symbols: []
+""")
+        result = load_config(cfg)
+        assert len(result.symbols) == 0
 
     def test_missing_file_raises(self, tmp_path):
         with pytest.raises(FileNotFoundError):

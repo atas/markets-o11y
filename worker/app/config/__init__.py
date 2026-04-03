@@ -34,24 +34,21 @@ def load_config(path: Path = CONFIG_PATH) -> AppConfig:
     history_years = int(defaults.get("history_years", 10))
 
     symbols: list[SymbolConfig] = []
-    for category, items in raw.get("symbols", {}).items():
-        if not isinstance(items, list):
+    for item in raw.get("symbols", []):
+        if isinstance(item, str):
+            sym = item
+            interval = global_interval
+        elif isinstance(item, dict):
+            sym = item["symbol"]
+            interval = parse_interval(item.get("fetch_interval", global_interval))
+        else:
             continue
-        for item in items:
-            if isinstance(item, str):
-                sym = item
-                interval = global_interval
-            elif isinstance(item, dict):
-                sym = item["symbol"]
-                interval = parse_interval(item.get("fetch_interval", global_interval))
-            else:
-                continue
-            symbols.append(SymbolConfig(
-                symbol=sym,
-                fetch_interval=interval,
-            ))
+        symbols.append(SymbolConfig(
+            symbol=sym,
+            fetch_interval=interval,
+        ))
 
-    logger.info("Loaded %d symbols across categories", len(symbols))
+    logger.info("Loaded %d symbols", len(symbols))
     return AppConfig(
         fetch_interval=global_interval,
         history_years=history_years,

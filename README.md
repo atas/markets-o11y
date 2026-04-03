@@ -1,6 +1,6 @@
 # markets-o11y
 
-Self-hosted market observability for stocks, commodities, forex, and crypto. Powered by [yfinance](https://github.com/ranaroussi/yfinance), stored in [TimescaleDB](https://www.timescale.com/), visualized in [Grafana](https://grafana.com/).
+Self-hosted market observability for stocks, commodities, forex, and crypto.
 
 ```
 ┌────────────┐     ┌──────────────┐     ┌──────────┐
@@ -14,23 +14,25 @@ Self-hosted market observability for stocks, commodities, forex, and crypto. Pow
 
 No accounts. No API keys. No cloud. Just `docker compose up`.
 
-## Quick Start
+## Getting Started
+
+**Prerequisites:** [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/markets-o11y.git
+git clone https://github.com/atas/markets-o11y.git
 cd markets-o11y
-cp config.example.yaml config.yaml
-cp .env.example .env
+cp config.example.yaml config.yaml  # customize your watchlist
+cp .env.example .env                # default DB & Grafana credentials
 docker compose up
 ```
 
-Grafana is at [http://localhost:3000](http://localhost:3000) (default login: admin/admin).
+That's it. Open [http://localhost:3000](http://localhost:3000) and log in with **admin / admin**.
 
-On first run, the fetcher backfills up to 10 years of historical data for all configured symbols, then polls every 15 minutes.
+On first run, the worker backfills up to 10 years of daily history for every symbol, then polls every 15 minutes for intraday prices.
 
 ## Configuration
 
-Edit `config.yaml` to customize your watchlist:
+Edit `config.yaml` to add or remove symbols:
 
 ```yaml
 defaults:
@@ -38,54 +40,36 @@ defaults:
   history_years: 10
 
 symbols:
-  stocks:
-    - symbol: AAPL
-    - symbol: SAP.DE
-      fetch_interval: 30m  # per-symbol override
-  commodities:
-    - symbol: GC=F   # Gold
-    - symbol: SI=F   # Silver
-  forex:
-    - symbol: EURUSD=X
-  crypto:
-    - symbol: BTC-USD
+  - symbol: AAPL
+  - symbol: SAP.DE
+    fetch_interval: 30m  # per-symbol override
+  - symbol: GC=F        # Gold futures
+  - symbol: EURUSD=X
+  - symbol: BTC-USD
 ```
 
-See `config.example.yaml` for the full default watchlist.
+Any ticker supported by [yfinance](https://github.com/ranaroussi/yfinance) works:
 
-## Architecture
+| Type | Format | Examples |
+|------|--------|----------|
+| US Stocks | Plain ticker | `AAPL`, `MSFT`, `GOOGL` |
+| EU Stocks | Ticker + exchange suffix | `SAP.DE`, `MC.PA`, `ASML.AS` |
+| Commodities | `=F` suffix | `GC=F` (gold), `CL=F` (oil) |
+| Forex | `=X` suffix | `EURUSD=X`, `GBPUSD=X` |
+| Crypto | `-USD` suffix | `BTC-USD`, `ETH-USD` |
+| Indices | `^` prefix | `^GSPC` (S&P 500), `^DJI` (Dow) |
 
-| Service | Image | Purpose |
-|---------|-------|---------|
-| **worker** | Custom Python 3.12 | Fetches prices via yfinance, backfills history, polls on interval |
-| **timescaledb** | `timescale/timescaledb:latest-pg16` | Stores all price data in a hypertable |
-| **grafana** | `grafana/grafana-oss:latest` | Pre-provisioned dashboards and example alerts |
+See [`config.example.yaml`](config.example.yaml) for the full default watchlist.
 
-## Supported Assets
+## How It Works
 
-| Category | Examples | Ticker Format |
-|----------|----------|---------------|
-| US Stocks | AAPL, MSFT, GOOGL | Plain ticker |
-| EU Stocks | SAP.DE, MC.PA, ASML.AS | Ticker + exchange suffix |
-| Commodities | GC=F (gold), SI=F (silver), CL=F (oil) | Futures with `=F` |
-| Forex | EURUSD=X, GBPUSD=X | Pair with `=X` |
-| Crypto | BTC-USD, ETH-USD | Pair with `-USD` |
-| Indices | ^GSPC (S&P 500), ^DJI (Dow) | `^` prefix |
+The **worker** fetches OHLCV data from Yahoo Finance via yfinance and writes it to a **TimescaleDB** hypertable. **Grafana** reads from that same database with pre-provisioned dashboards.
 
-## Legal Disclaimer
+Intraday (15-min) bars are kept until the next trading day, then automatically compacted into a single daily bar per symbol. Daily bars are kept forever.
 
-This project is an open-source tool for **personal, non-commercial use only**.
+## Legal
 
-**Regarding data sources:**
-- Raw financial price data (stock prices, commodity prices, exchange rates) is factual information and is not subject to copyright under US law (*Feist Publications v. Rural Telephone*, 1991) or EU law.
-- However, accessing data via Yahoo Finance or any third-party provider requires agreeing to their respective Terms of Service. You should refer to Yahoo!'s terms of use ([here](https://policies.yahoo.com/us/en/yahoo/terms/product-atos/apiforydn/index.htm), [here](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html), and [here](https://policies.yahoo.com/us/en/yahoo/terms/index.htm)) for details on your rights to use the actual data downloaded. **Each user is solely responsible for ensuring their usage complies with the ToS of their chosen data source.**
-- This project does not endorse, encourage, or facilitate any violation of third-party Terms of Service.
-
-**General:**
-- This software is provided "as is", without warranty of any kind.
-- The contributors of this project accept no liability for any financial loss, legal consequences, or data inaccuracies arising from the use of this software.
-- **Do not rely on this data for financial decisions.** Always verify prices with an authoritative source.
-- This project is not affiliated with Yahoo Finance or any financial exchange.
+This is an open-source tool for **personal, non-commercial use only**. Each user is responsible for complying with the Terms of Service of their data source (e.g. [Yahoo Finance](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html)). Do not rely on this data for financial decisions — always verify with an authoritative source. Not affiliated with Yahoo Finance or any exchange.
 
 ## License
 
