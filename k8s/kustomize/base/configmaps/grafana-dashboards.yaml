@@ -140,7 +140,7 @@ data:
                 "uid": "timescaledb"
               },
               "format": "time_series",
-              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"VOO\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VOO'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
+              "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"VOO\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'VOO'\n  GROUP BY 1\nORDER BY 1",
               "refId": "A"
             }
           ],
@@ -3155,6 +3155,6 @@ data:
       "timezone": "browser",
       "title": "Markets",
       "uid": "markets-o11y",
-      "version": 20,
+      "version": 21,
       "weekStart": ""
     }

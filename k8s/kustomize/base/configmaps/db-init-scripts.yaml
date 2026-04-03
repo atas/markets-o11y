@@ -14,7 +14,6 @@ data:
         low         DOUBLE PRECISION,
         close       DOUBLE PRECISION,
         volume      BIGINT,
-        category    TEXT,
         granularity TEXT NOT NULL DEFAULT 'daily'
     );
 
@@ -23,5 +22,3 @@ data:
     CREATE UNIQUE INDEX IF NOT EXISTS idx_prices_symbol_time_gran
         ON prices (symbol, time, granularity);
 
-    CREATE INDEX IF NOT EXISTS idx_prices_category
-        ON prices (category, time DESC);

@@ -17,8 +17,12 @@ class PriceRow(NamedTuple):
     low: float | None
     close: float
     volume: int | None
-    category: str
     granularity: str
+
+
+class StaleIntraday(NamedTuple):
+    symbol: str
+    date: date
 
 
 def get_connection():
@@ -57,7 +61,7 @@ def insert_prices(conn, rows: list[PriceRow]) -> int:
         execute_values(
             cur,
             """
-            INSERT INTO prices (time, symbol, open, high, low, close, volume, category, granularity)
+            INSERT INTO prices (time, symbol, open, high, low, close, volume, granularity)
             VALUES %s
             ON CONFLICT (symbol, time, granularity) DO NOTHING
             """,
@@ -104,16 +108,23 @@ def has_intraday_rows(conn, symbol: str, date: date | datetime) -> bool:
         return cur.fetchone() is not None
 
 
-def get_stale_intraday_dates(conn) -> list[tuple[str, date, str]]:
-    """Return distinct (symbol, date, category) tuples with intraday rows from before today."""
+def get_stale_intraday_dates(conn) -> list[StaleIntraday]:
+    """Return previous days' intraday (symbol, date) entries,
+    but only for symbols that already have new intraday data today."""
     with conn.cursor() as cur:
         cur.execute(
             """
-            SELECT DISTINCT symbol, time::date AS d, category
-            FROM prices
-            WHERE granularity = 'intraday'
-              AND time < CURRENT_DATE
-            ORDER BY symbol, d
+            SELECT DISTINCT p.symbol, p.time::date AS d
+            FROM prices p
+            WHERE p.granularity = 'intraday'
+              AND p.time < CURRENT_DATE
+              AND EXISTS (
+                  SELECT 1 FROM prices t
+                  WHERE t.symbol = p.symbol
+                    AND t.granularity = 'intraday'
+                    AND t.time >= CURRENT_DATE
+              )
+            ORDER BY p.symbol, d
             """
         )
-        return [(row[0], row[1], row[2]) for row in cur.fetchall()]
+        return [StaleIntraday(*row) for row in cur.fetchall()]

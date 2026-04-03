@@ -13,7 +13,7 @@ from db import PriceRow, get_connection, get_stale_intraday_dates, insert_prices
 logger = logging.getLogger(__name__)
 
 
-def _fetch_daily_ohlcv(symbol: str, target_date: date, category: str) -> PriceRow | None:
+def _fetch_daily_ohlcv(symbol: str, target_date: date) -> PriceRow | None:
     """Try to fetch the official daily bar for a specific date.
 
     Returns a PriceRow if available, None if Yahoo hasn't finalized it yet.
@@ -42,7 +42,6 @@ def _fetch_daily_ohlcv(symbol: str, target_date: date, category: str) -> PriceRo
                 low=safe_float(row.get("Low")),
                 close=close,
                 volume=safe_int(row.get("Volume")),
-                category=category,
                 granularity="daily",
             )
     return None
@@ -64,18 +63,18 @@ def compact_stale_intraday(conn) -> int:
         return 0
 
     total_deleted = 0
-    for symbol, stale_date, category in stale:
-        daily_ohlcv = _fetch_daily_ohlcv(symbol, stale_date, category)
+    for entry in stale:
+        daily_ohlcv = _fetch_daily_ohlcv(entry.symbol, entry.date)
         if daily_ohlcv is None:
-            logger.debug("Daily bar not yet available for %s on %s", symbol, stale_date)
+            logger.debug("Daily bar not yet available for %s on %s", entry.symbol, entry.date)
             continue
 
         insert_prices(conn, [daily_ohlcv])
-        deleted = delete_intraday(conn, symbol, stale_date)
+        deleted = delete_intraday(conn, entry.symbol, entry.date)
         total_deleted += deleted
         logger.info(
             "Compacted %s %s: deleted %d intraday rows, inserted daily bar",
-            symbol, stale_date, deleted,
+            entry.symbol, entry.date, deleted,
         )
 
     return total_deleted

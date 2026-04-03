@@ -14,7 +14,6 @@ CONFIG_PATH = Path("/app/config.yaml")
 @dataclass
 class SymbolConfig:
     symbol: str
-    category: str
     fetch_interval: int  # seconds
 
 
@@ -49,7 +48,6 @@ def load_config(path: Path = CONFIG_PATH) -> AppConfig:
                 continue
             symbols.append(SymbolConfig(
                 symbol=sym,
-                category=category,
                 fetch_interval=interval,
             ))
 
