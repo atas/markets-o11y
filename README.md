@@ -14,6 +14,12 @@ Self-hosted market observability for stocks, commodities, forex, and crypto.
 
 No accounts. No API keys. No cloud. Just `docker compose up`.
 
+> **Note:** This project uses [yfinance](https://github.com/ranaroussi/yfinance) to fetch data from Yahoo Finance. It does not distribute any data. Each user is responsible for complying with Yahoo's [Terms of Service](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html).
+
+| Last 12 hours | Last 5 years |
+|:---:|:---:|
+| <a href="docs/screenshot-12h.png"><img src="docs/screenshot-12h.png" width="400"></a> | <a href="docs/screenshot-5y.png"><img src="docs/screenshot-5y.png" width="400"></a> |
+
 ## Getting Started
 
 **Prerequisites:** [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
