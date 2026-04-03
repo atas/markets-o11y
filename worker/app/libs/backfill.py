@@ -33,7 +33,6 @@ def _backfill_daily(conn, symbol_config: SymbolConfig, history_years: int) -> in
         symbol=symbol,
         start=start.strftime("%Y-%m-%d"),
         end=now.strftime("%Y-%m-%d"),
-        category=symbol_config.category,
     )
 
     if rows:
@@ -73,7 +72,6 @@ def _backfill_intraday(conn, symbol_config: SymbolConfig) -> int:
             low=safe_float(row.get("Low")),
             close=close,
             volume=safe_int(row.get("Volume")),
-            category=symbol_config.category,
             granularity="intraday",
         ))
 

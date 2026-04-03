@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime, timedelta, timezone
 from typing import cast
 
 import pandas as pd
@@ -12,7 +11,7 @@ from utils.yf_utils import normalize_download
 logger = logging.getLogger(__name__)
 
 
-def fetch_date_range(symbol: str, start: str, end: str, category: str) -> list[PriceRow]:
+def fetch_date_range(symbol: str, start: str, end: str) -> list[PriceRow]:
     """Fetch historical daily data for a symbol between start and end dates."""
     try:
         ticker = yf.Ticker(symbol)
@@ -39,28 +38,24 @@ def fetch_date_range(symbol: str, start: str, end: str, category: str) -> list[P
             low=safe_float(row.get("Low")),
             close=close,
             volume=safe_int(row.get("Volume")),
-            category=category,
             granularity="daily",
         ))
     return rows
 
 
-def fetch_current(symbols: list[dict]) -> list[PriceRow]:
+def fetch_current(symbols: list[str]) -> list[PriceRow]:
     """Fetch the latest 15-minute bar for all symbols in a single batch call.
 
-    Uses a minimal time window (one interval + 1 min buffer) so Yahoo only
-    returns 1-2 bars per ticker instead of the whole day.
-    Full intraday history is handled by backfill on startup.
+    Fetches full day's data — dedup via ON CONFLICT handles overlap.
+    Also self-heals gaps from laptop sleep or downtime.
     """
     if not symbols:
         return []
 
-    tickers = [s["symbol"] for s in symbols]
-    category_map = {s["symbol"]: s["category"] for s in symbols}
+    tickers = symbols
 
     try:
-        start = datetime.now(timezone.utc) - timedelta(minutes=60)
-        df = yf.download(tickers, start=start, interval="15m", group_by="ticker", progress=False)
+        df = yf.download(tickers, period="1d", interval="15m", group_by="ticker", progress=False)
     except Exception:
         logger.exception("Failed to fetch current prices")
         return []
@@ -88,7 +83,6 @@ def fetch_current(symbols: list[dict]) -> list[PriceRow]:
             low=safe_float(last.get("Low")),
             close=close,
             volume=safe_int(last.get("Volume")),
-            category=category_map[sym],
             granularity="intraday",
         ))
 

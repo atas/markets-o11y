@@ -12,14 +12,12 @@ class TestFetchDateRange:
             symbol="AAPL",
             start=start.strftime("%Y-%m-%d"),
             end=end.strftime("%Y-%m-%d"),
-            category="stocks",
         )
         assert isinstance(rows, list)
         assert len(rows) > 0
         for row in rows:
             assert isinstance(row, PriceRow)
             assert row.symbol == "AAPL"
-            assert row.category == "stocks"
             assert row.granularity == "daily"
             assert row.close is not None
             assert isinstance(row.close, float)
@@ -32,7 +30,6 @@ class TestFetchDateRange:
             symbol="ZZZXXX999",
             start=start.strftime("%Y-%m-%d"),
             end=end.strftime("%Y-%m-%d"),
-            category="stocks",
         )
         assert rows == []
 
@@ -40,12 +37,11 @@ class TestFetchDateRange:
 class TestFetchCurrent:
     def test_returns_list(self):
         """fetch_current may return empty on weekends/off-hours, but should always return a list."""
-        rows = fetch_current([{"symbol": "AAPL", "category": "stocks"}])
+        rows = fetch_current(["AAPL"])
         assert isinstance(rows, list)
         for row in rows:
             assert isinstance(row, PriceRow)
             assert row.symbol == "AAPL"
-            assert row.category == "stocks"
             assert row.granularity == "intraday"
             assert row.close is not None
 

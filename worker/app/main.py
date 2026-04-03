@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 def poll(config: AppConfig):
     """Fetch current prices for all configured symbols and insert into DB."""
-    symbols = [{"symbol": s.symbol, "category": s.category} for s in config.symbols]
+    symbols = [s.symbol for s in config.symbols]
     logger.info("Polling %d symbols", len(symbols))
 
     rows = fetch_current(symbols)

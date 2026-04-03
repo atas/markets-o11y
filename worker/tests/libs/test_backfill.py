@@ -12,7 +12,7 @@ class TestBackfillDaily:
     def test_fresh_backfill_fetches_and_inserts(self, mock_last_ts, mock_insert):
         mock_insert.return_value = 5
         conn = MagicMock()
-        sym = SymbolConfig(symbol="AAPL", category="stocks", fetch_interval=900)
+        sym = SymbolConfig(symbol="AAPL", fetch_interval=900)
 
         result = _backfill_daily(conn, sym, history_years=1)
 
@@ -32,7 +32,7 @@ class TestBackfillDaily:
     def test_recent_data_skips_fetch(self, mock_last_ts, mock_insert):
         mock_last_ts.return_value = datetime.now(timezone.utc) - timedelta(hours=12)
         conn = MagicMock()
-        sym = SymbolConfig(symbol="AAPL", category="stocks", fetch_interval=900)
+        sym = SymbolConfig(symbol="AAPL", fetch_interval=900)
 
         result = _backfill_daily(conn, sym, history_years=1)
 
@@ -46,7 +46,7 @@ class TestBackfillIntraday:
         """Intraday may return empty on weekends — just verify no crash."""
         mock_insert.return_value = 0
         conn = MagicMock()
-        sym = SymbolConfig(symbol="AAPL", category="stocks", fetch_interval=900)
+        sym = SymbolConfig(symbol="AAPL", fetch_interval=900)
 
         result = _backfill_intraday(conn, sym)
 
