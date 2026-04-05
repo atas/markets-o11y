@@ -75,7 +75,15 @@ Intraday (15-min) bars are kept until the next trading day, then automatically c
 
 ## Legal
 
-This is an open-source tool for **personal, non-commercial use only**. Each user is responsible for complying with the Terms of Service of their data source (e.g. [Yahoo Finance](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html)). Do not rely on this data for financial decisions — always verify with an authoritative source. Not affiliated with Yahoo Finance or any exchange.
+This project uses [yfinance](https://github.com/ranaroussi/yfinance) to fetch market data. By using this project, you are bound by yfinance's terms and the terms of the underlying data sources. Per yfinance:
+
+> yfinance is not affiliated, endorsed, or vetted by Yahoo, Inc. It's an open-source tool that uses Yahoo's publicly available APIs, and is intended for research and educational purposes. The Yahoo! finance API is intended for **personal use only**.
+
+Do not rely on this data for financial decisions — always verify with an authoritative source.
+
+## Security Note
+
+If deploying to Kubernetes, change `GF_AUTH_ANONYMOUS_ORG_ROLE` from `Admin` to `Viewer` in the Grafana deployment. The default `Admin` role means anyone who can reach the NodePort (30300) gets full Grafana admin access, including the ability to run arbitrary SQL queries against TimescaleDB.
 
 ## License
 
