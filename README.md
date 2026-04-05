@@ -16,9 +16,11 @@ No accounts. No API keys. No cloud. Just `docker compose up` or deploy to Kubern
 
 > **Note:** This project uses [yfinance](https://github.com/ranaroussi/yfinance) to fetch data from Yahoo Finance. It does not distribute any data. Each user is responsible for complying with Yahoo's [Terms of Service](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html).
 
-| Last 12 hours | Last 5 years |
-|:---:|:---:|
+|                                     Last 12 hours                                     |                                    Last 5 years                                     |
+| :-----------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
 | <a href="docs/screenshot-12h.png"><img src="docs/screenshot-12h.png" width="400"></a> | <a href="docs/screenshot-5y.png"><img src="docs/screenshot-5y.png" width="400"></a> |
+
+**Blog post:** How it works - https://www.atasasmaz.com/p/markets-o11y
 
 ## Getting Started
 
@@ -56,14 +58,14 @@ symbols:
 
 Any ticker supported by [yfinance](https://github.com/ranaroussi/yfinance) works:
 
-| Type | Format | Examples |
-|------|--------|----------|
-| US Stocks | Plain ticker | `AAPL`, `MSFT`, `GOOGL` |
-| EU Stocks | Ticker + exchange suffix | `SAP.DE`, `MC.PA`, `ASML.AS` |
-| Commodities | `=F` suffix | `GC=F` (gold), `CL=F` (oil) |
-| Forex | `=X` suffix | `EURUSD=X`, `GBPUSD=X` |
-| Crypto | `-USD` suffix | `BTC-USD`, `ETH-USD` |
-| Indices | `^` prefix | `^GSPC` (S&P 500), `^DJI` (Dow) |
+| Type        | Format                   | Examples                        |
+| ----------- | ------------------------ | ------------------------------- |
+| US Stocks   | Plain ticker             | `AAPL`, `MSFT`, `GOOGL`         |
+| EU Stocks   | Ticker + exchange suffix | `SAP.DE`, `MC.PA`, `ASML.AS`    |
+| Commodities | `=F` suffix              | `GC=F` (gold), `CL=F` (oil)     |
+| Forex       | `=X` suffix              | `EURUSD=X`, `GBPUSD=X`          |
+| Crypto      | `-USD` suffix            | `BTC-USD`, `ETH-USD`            |
+| Indices     | `^` prefix               | `^GSPC` (S&P 500), `^DJI` (Dow) |
 
 See [`config.example.yaml`](config.example.yaml) for the full default watchlist.
 
