@@ -26,7 +26,7 @@ CREATE OR REPLACE FUNCTION get_symbol_prices(
     FROM prices t
     WHERE t.time BETWEEN p_from AND p_to
       AND t.symbol = p_symbol
-      AND (t.granularity = 'daily' OR t.time >= CURRENT_DATE)
+      AND NOT (t.granularity = 'intraday' AND t.time < CURRENT_DATE)
     GROUP BY 1
     ORDER BY 1;
 $$ LANGUAGE sql STABLE;
