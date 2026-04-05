@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 2,
-  "id": 2978382058307584,
+  "id": 648247957995520,
   "links": [],
   "panels": [
     {
@@ -1747,15 +1747,7 @@
           },
           "unit": "currencyUSD"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "value"
-            },
-            "properties": []
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -2254,9 +2246,6 @@
             },
             "insertNulls": false,
             "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -2327,28 +2316,9 @@
             "type": "grafana-postgresql-datasource",
             "uid": "timescaledb"
           },
-          "editorMode": "code",
           "format": "time_series",
-          "rawQuery": true,
           "rawSql": "SELECT time_bucket('$__interval', time) AS time, avg(close) AS \"MSFT\"\nFROM prices\nWHERE $__timeFilter(time)\n  AND symbol = 'MSFT'\n  AND (granularity = 'daily' OR time >= CURRENT_DATE)\nGROUP BY 1\nORDER BY 1",
-          "refId": "A",
-          "sql": {
-            "columns": [
-              {
-                "parameters": [],
-                "type": "function"
-              }
-            ],
-            "groupBy": [
-              {
-                "property": {
-                  "type": "string"
-                },
-                "type": "groupBy"
-              }
-            ],
-            "limit": 50
-          }
+          "refId": "A"
         }
       ],
       "title": "MSFT \ud83e\ude9f",
@@ -3149,6 +3119,6 @@
   "timezone": "browser",
   "title": "Markets",
   "uid": "markets-o11y",
-  "version": 21,
+  "version": 3,
   "weekStart": ""
 }
