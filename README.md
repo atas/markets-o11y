@@ -2,14 +2,17 @@
 
 Self-hosted market observability for stocks, commodities, forex, and crypto.
 
-```
-┌────────────┐     ┌──────────────┐     ┌──────────┐
-│   worker   │────>│  TimescaleDB │<────│  Grafana  │
-│  (fetcher) │     │  (storage)   │     │  (UI)     │
-└────────────┘     └──────────────┘     └──────────┘
-     polls              stores            visualizes
-  Yahoo Finance      price data          dashboards
-  every 15min       (hypertable)         + alerts
+```mermaid
+graph LR
+    I(["Initial Run<br/><i>backfills 10 years<br/>daily data</i>"])
+    W["worker<br/><i>polls</i>"]
+    T["TimescaleDB<br/><i>storage</i>"]
+    G["Grafana<br/><i>UI</i>"]
+
+    I -- "run in the bg" --> W
+    W -- "every 15min" --> T
+    G -- "visualizes<br/>dashboards + alerts" --> T
+    G -- "📊" --> Y["🧑 You"]
 ```
 
 No accounts. No API keys. No cloud. Just `docker compose up` or deploy to Kubernetes.
