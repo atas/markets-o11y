@@ -12,7 +12,7 @@ graph LR
     I -- "run in the bg" --> W
     W -- "every 15min" --> T
     G -- "visualizes<br/>dashboards + alerts" --> T
-    G -- "📊" --> Y["🧑 You"]
+    G -- "📊" --> Y["You"]
 ```
 
 No accounts. No API keys. No cloud. Just `docker compose up` or deploy to Kubernetes.
