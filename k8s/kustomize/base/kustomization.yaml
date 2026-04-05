@@ -16,12 +16,8 @@ resources:
   # PVCs
   - pvcs/pvcs.yaml
 
-  # ConfigMaps
+  # ConfigMaps (non-generated)
   - configmaps/app-config.yaml
-  - configmaps/db-init-scripts.yaml
-  - configmaps/worker-config.yaml
-  - configmaps/grafana-provisioning.yaml
-  - configmaps/grafana-dashboards.yaml
   - configmaps/worker-logs-dashboard.yaml
 
   # Deployments
@@ -31,3 +27,22 @@ resources:
 
   # Services
   - services/services.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: db-init-scripts
+    files:
+      - init.sql=../../../db/init.sql
+  - name: worker-config
+    files:
+      - config.yaml=../../../config.yaml
+  - name: grafana-dashboards
+    files:
+      - markets.json=../../../grafana/dashboards/markets.json
+  - name: grafana-provisioning
+    files:
+      - datasources.yaml=../../../grafana/provisioning/datasources/timescaledb.yaml
+      - dashboards.yaml=../../../grafana/provisioning/dashboards/dashboard.yaml
+      - alerting.yaml=../../../grafana/provisioning/alerting/example-alerts.yaml

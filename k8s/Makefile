@@ -17,7 +17,7 @@ help: ## Show this help message
 
 apply-prod: ## Apply all manifests with worker image tag (usage: make apply-prod [TAG=sha-abc1234])
 	@echo "Applying to production with $(IMAGE):$(TAG)..."
-	kubectl kustomize kustomize/overlays/prod | sed 's|image: $(IMAGE):.*|image: $(IMAGE):$(TAG)|' | kubectl apply -f -
+	kubectl kustomize --load-restrictor LoadRestrictionsNone kustomize/overlays/prod | sed 's|image: $(IMAGE):.*|image: $(IMAGE):$(TAG)|' | kubectl apply -f -
 	@echo "Done! Check pods with: kubectl get pods -n markets-o11y-prod"
 
 apply-secrets-prod: ## Apply secrets to production (manual, not in kustomize)
@@ -33,10 +33,10 @@ apply-secrets-prod: ## Apply secrets to production (manual, not in kustomize)
 	@echo "Secrets applied to markets-o11y-prod namespace."
 
 diff-prod: ## Show diff before applying to production
-	kubectl diff -k kustomize/overlays/prod || true
+	kubectl kustomize --load-restrictor LoadRestrictionsNone kustomize/overlays/prod | kubectl diff -f - || true
 
 delete-prod: ## Delete all production resources
-	kubectl delete -k kustomize/overlays/prod
+	kubectl kustomize --load-restrictor LoadRestrictionsNone kustomize/overlays/prod | kubectl delete -f -
 
 watch-prod: ## Watch production pods in real-time
 	kubectl get pods -n markets-o11y-prod -w
