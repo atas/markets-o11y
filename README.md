@@ -74,7 +74,7 @@ See [`config.example.yaml`](config.example.yaml) for the full default watchlist.
 
 ## How It Works
 
-The **worker** fetches OHLCV data from Yahoo Finance via yfinance and writes it to a **TimescaleDB** hypertable. **Grafana** reads from that same database with pre-provisioned dashboards.
+The **worker** fetches OHLCV data via [yfinance](https://github.com/ranaroussi/yfinance) and writes it to a **TimescaleDB** hypertable. **Grafana** reads from that same database with pre-provisioned dashboards.
 
 Intraday (15-min) bars are kept until the next trading day, then automatically compacted into a single daily bar per symbol. Daily bars are kept forever.
 
