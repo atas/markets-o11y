@@ -1,13 +1,12 @@
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import cast
 
 import pandas as pd
 import yfinance as yf
-
 from config import AppConfig, SymbolConfig
-from utils.convert import safe_float, safe_int
 from db import PriceRow, get_connection, get_last_timestamp, insert_prices
+from utils.convert import safe_float, safe_int
 from yf.fetcher import fetch_date_range
 
 logger = logging.getLogger(__name__)
@@ -17,7 +16,7 @@ def _backfill_daily(conn, symbol_config: SymbolConfig, history_years: int) -> in
     """Backfill daily historical data for a symbol. Returns rows inserted."""
     symbol = symbol_config.symbol
     last_daily = get_last_timestamp(conn, symbol, granularity="daily")
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
 
     if last_daily is None:
         start = now - timedelta(days=history_years * 365)

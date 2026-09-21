@@ -3,9 +3,8 @@ from typing import cast
 
 import pandas as pd
 import yfinance as yf
-
-from utils.convert import safe_float, safe_int
 from db import PriceRow
+from utils.convert import safe_float, safe_int
 from utils.yf_utils import normalize_download
 
 logger = logging.getLogger(__name__)
