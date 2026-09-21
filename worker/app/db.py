@@ -29,7 +29,7 @@ def get_connection():
     """Create a new database connection from environment variables."""
     return psycopg2.connect(
         host=os.environ.get("DB_HOST", "timescaledb"),
-        port=int(os.environ.get("DB_PORT", 5432)),
+        port=int(os.environ.get("DB_PORT", "5432")),
         user=os.environ.get("DB_USER", "markets"),
         password=os.environ.get("DB_PASSWORD", "markets"),
         dbname=os.environ.get("DB_NAME", "markets"),

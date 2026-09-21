@@ -3,7 +3,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
-
 from utils.time import parse_interval
 
 logger = logging.getLogger(__name__)

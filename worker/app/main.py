@@ -2,14 +2,12 @@ import logging
 import time
 
 import schedule
-
-from libs.backfill import backfill_all
-from libs.compact import try_compact
 from config import AppConfig, load_config
 from db import get_connection, insert_prices
-from yf.fetcher import fetch_current
-
+from libs.backfill import backfill_all
+from libs.compact import try_compact
 from utils.log_utils import YFinanceDelistFilter
+from yf.fetcher import fetch_current
 
 logging.basicConfig(
     level=logging.INFO,
