@@ -30,3 +30,4 @@ Thumbs.db
 
 # Future: Node.js (Hypercore P2P sidecar)
 node_modules/
+.claude/worktrees/
