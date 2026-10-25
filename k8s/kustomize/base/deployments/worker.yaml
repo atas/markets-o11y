@@ -4,6 +4,12 @@ metadata:
   name: worker
   labels:
     app.kubernetes.io/component: worker
+  # Keel (atas/microk8s k8s/keel.md) rolls this to every new :main digest; CI only pushes it.
+  annotations:
+    keel.sh/policy: force
+    keel.sh/match-tag: "true"
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "@every 1m"
 spec:
   replicas: 1
   strategy:
@@ -25,7 +31,8 @@ spec:
             - "until pg_isready -h timescaledb -p 5432; do echo 'waiting for timescaledb...'; sleep 2; done"
       containers:
         - name: worker
-          image: ghcr.io/atas/markets-o11y-worker:latest
+          image: ghcr.io/atas/markets-o11y-worker:main
+          imagePullPolicy: Always
           env:
             - name: DB_HOST
               valueFrom:

@@ -1,23 +1,22 @@
 # markets-o11y Kubernetes Deployment Makefile
 
-.PHONY: help apply-prod apply-secrets-prod diff-prod delete-prod watch-prod status-prod deploy-worker-prod logs-worker
+.PHONY: help apply-prod apply-secrets-prod diff-prod delete-prod watch-prod status-prod logs-worker
 
 .DEFAULT_GOAL := help
 
-IMAGE := ghcr.io/atas/markets-o11y-worker
-TAG   ?= $(shell git rev-parse --short HEAD | sed 's/^/sha-/')
+# The worker runs ghcr.io/atas/markets-o11y-worker:main; Keel (atas/microk8s k8s/keel.md)
+# rolls it to every new :main digest, so no target here sets an image.
 
 help: ## Show this help message
 	@echo "markets-o11y Kubernetes Deployment"
 	@echo ""
-	@echo "Usage: make [target] [TAG=sha-abc1234]"
+	@echo "Usage: make [target]"
 	@echo ""
 	@echo "Targets:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
-apply-prod: ## Apply all manifests with worker image tag (usage: make apply-prod [TAG=sha-abc1234])
-	@echo "Applying to production with $(IMAGE):$(TAG)..."
-	kubectl kustomize --load-restrictor LoadRestrictionsNone kustomize/overlays/prod | sed 's|image: $(IMAGE):.*|image: $(IMAGE):$(TAG)|' | kubectl apply -f -
+apply-prod: ## Apply all manifests (the worker's build stays whatever :main is)
+	kubectl kustomize --load-restrictor LoadRestrictionsNone kustomize/overlays/prod | kubectl apply -f -
 	@echo "Done! Check pods with: kubectl get pods -n markets-o11y-prod"
 
 apply-secrets-prod: ## Apply secrets to production (manual, not in kustomize)
@@ -48,11 +47,6 @@ status-prod: ## Show status of all production resources
 	kubectl get svc -n markets-o11y-prod
 	@echo "\n=== PVCs ==="
 	kubectl get pvc -n markets-o11y-prod
-
-deploy-worker-prod: ## Deploy worker with git SHA tag (usage: make deploy-worker-prod [TAG=sha-abc1234])
-	@echo "Deploying $(IMAGE):$(TAG)"
-	kubectl set image deployment/worker worker=$(IMAGE):$(TAG) -n markets-o11y-prod
-	kubectl rollout status deployment/worker -n markets-o11y-prod
 
 logs-worker: ## Tail worker logs
 	kubectl logs -f deployment/worker -n markets-o11y-prod
