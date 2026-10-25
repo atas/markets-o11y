@@ -1,6 +1,6 @@
 services:
   timescaledb:
-    image: timescale/timescaledb:latest-pg16
+    image: timescale/timescaledb:latest-pg16@sha256:322ae364eca3321cf2a48f1ef31213b87843413b3cf8feeebf54e999a26bb731  # TimescaleDB 2.26.1, Postgres 16.15
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-markets}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-markets}
@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
 
   grafana:
-    image: grafana/grafana-oss:latest
+    image: grafana/grafana-oss:latest@sha256:5dad0df181cb644a14e13617b913b261a54f7d4fd4510721dba420929f35bea2  # Grafana 13.0.2
     environment:
       GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:-admin}
       GF_AUTH_ANONYMOUS_ENABLED: "true"
