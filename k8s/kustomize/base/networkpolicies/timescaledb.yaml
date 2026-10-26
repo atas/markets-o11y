@@ -1,0 +1,17 @@
+# Only markets-o11y's own pods (the worker, Grafana) may reach TimescaleDB; every other pod in the
+# cluster is refused. The probes are exec and `kubectl port-forward` enters the pod, so neither is
+# affected.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: timescaledb
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: timescaledb
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector: {}
+      ports:
+        - port: 5432

@@ -23,6 +23,7 @@ resources:
   # Deployments
   - deployments/timescaledb.yaml
   - deployments/worker.yaml
+  - networkpolicies/timescaledb.yaml
   - deployments/grafana.yaml
 
   # Services
