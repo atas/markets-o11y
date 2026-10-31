@@ -15,9 +15,22 @@ spec:
       labels:
         app.kubernetes.io/component: timescaledb
     spec:
+      # Postgres' own uid in this Alpine image, 70, from the start (the data is 70-owned), in a user
+      # namespace (nobody on the host); the volume keeps its owner through an idmapped mount.
+      hostUsers: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 70
+        runAsGroup: 70
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: postgres
           image: timescale/timescaledb:latest-pg16@sha256:322ae364eca3321cf2a48f1ef31213b87843413b3cf8feeebf54e999a26bb731  # Postgres 16.15; ships TimescaleDB 2.12.2-2.31.0, the database runs extension 2.26.1
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           ports:
             - containerPort: 5432
               name: postgres
