@@ -14,16 +14,31 @@ spec:
       labels:
         app.kubernetes.io/component: grafana
     spec:
+      # Grafana's own uid 472 (group stays the image's 0), in a user namespace (nobody on the host).
+      hostUsers: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        seccompProfile:
+          type: RuntimeDefault
       initContainers:
         - name: wait-for-db
           image: postgres:16-alpine@sha256:f4610795587492cd4fb887c2dc3de301b813278bb6f616992061141b5f15ac36  # Postgres 16.15
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           command:
             - sh
             - -c
-            - "until pg_isready -h timescaledb -p 5432; do echo 'waiting for timescaledb...'; sleep 2; done"
+            - "until pg_isready -h timescaledb -p 5432 -U postgres; do echo 'waiting for timescaledb...'; sleep 2; done"
       containers:
         - name: grafana
           image: grafana/grafana-oss:latest@sha256:5dad0df181cb644a14e13617b913b261a54f7d4fd4510721dba420929f35bea2  # Grafana 13.0.2
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           ports:
             - containerPort: 3000
               name: http

@@ -22,18 +22,37 @@ spec:
       labels:
         app.kubernetes.io/component: worker
     spec:
+      # The image sets no user, so this ran as root on ares. uid 10001 in a user namespace (nobody on the
+      # host); yfinance's cache goes to XDG_CACHE_HOME, since that uid has no home.
+      hostUsers: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
       initContainers:
         - name: wait-for-db
           image: postgres:16-alpine@sha256:f4610795587492cd4fb887c2dc3de301b813278bb6f616992061141b5f15ac36  # Postgres 16.15
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           command:
             - sh
             - -c
-            - "until pg_isready -h timescaledb -p 5432; do echo 'waiting for timescaledb...'; sleep 2; done"
+            - "until pg_isready -h timescaledb -p 5432 -U postgres; do echo 'waiting for timescaledb...'; sleep 2; done"
       containers:
         - name: worker
           image: ghcr.io/atas/markets-o11y-worker:main
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           imagePullPolicy: Always
           env:
+            - name: XDG_CACHE_HOME
+              value: /tmp/cache
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
