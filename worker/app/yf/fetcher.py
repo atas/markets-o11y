@@ -54,7 +54,11 @@ def fetch_current(symbols: list[str]) -> list[PriceRow]:
     tickers = symbols
 
     try:
-        df = yf.download(tickers, period="1d", interval="15m", group_by="ticker", progress=False)
+        # threads=False: yfinance's threaded download keeps every finished thread forever
+        # (multitasking never empties its task list), which leaked about 88 MiB a day.
+        df = yf.download(
+            tickers, period="1d", interval="15m", group_by="ticker", progress=False, threads=False
+        )
     except Exception:
         logger.exception("Failed to fetch current prices")
         return []
